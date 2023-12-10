@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$color-gray-1:#EEF5FF;
+$color-gary-2:#9EB8D9;
+$color-gray-3:#7C93C3;
+$color-red:#A25772;
+$color-blue: #00A9FF;
+
+
+header {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    
+        img {
+            width: 80px;
+        }
+        div {
+          
+           h3 {
+            margin-top: -5px;
+            font-family: 'Pacifico', serif;
+            color: $color-gray-3;
+           }
+           span {
+            margin-top: -10px;
+            font-size: 15px;
+            font-family: 'Playfair Display', serif;
+            color: $color-gary-2;
+            font-weight: bold;
+           }
+        }
+    }
+    nav {
+        margin-right: 20px;
+        ul {
+            display: flex;
+            gap: 35px;
+            list-style-type: none;
+            li {
+                cursor: pointer;
+                a{
+                    text-decoration: none;
+                    position: relative;
+                    &::before {
+                        content: '';
+                        width: 0;
+                        height: 3px;
+                        background-color: $color-red;
+                        position: absolute;
+                        bottom: -5px;
+                        left: -5px;
+                        border-radius: 3px;
+                        transition: all 0.4s;
+
+                    }
+                    &::after {
+                        content: '';
+                        width: 0;
+                        height: 3px;
+                        background-color: $color-blue;
+                        position: absolute;
+                        top: -5px;
+                        right: -5px;
+                        border-radius: 3px;
+                        transition: all 0.4s;
+                    }
+                    &:hover::after, &:hover::before {
+                            width: 110%;
+                    }
+                }
+                .active {
+
+                }
+            }
+          
+            
+        }
+    }
+}
