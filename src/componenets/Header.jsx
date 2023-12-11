@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import Appointment from './Appointment'
 
 
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
         <nav>
             <ul>
                 <li>
-                    <NavLink>AnaSayfa</NavLink>
+                    <NavLink to={'/'}>AnaSayfa</NavLink>
                 </li>
                 <li>
                 <NavLink>Hizmetlerimiz</NavLink>
@@ -28,6 +29,7 @@ const Header = () => {
                 </li>
               
             </ul>
+            <Appointment/>
         </nav>
     </header>
   )
