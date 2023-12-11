@@ -23,9 +23,13 @@ const Header = () => {
                 <li>
                 <NavLink>İletişim</NavLink>
                 </li>
+                <li>
+                <button>Giriş Yap</button>
+                </li>
             </ul>
+           
         </nav>
-        <button>Online Randevu</button>
+       
     </header>
   )
 }

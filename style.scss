@@ -10,14 +10,14 @@ $color-primary: #0F2650;
 $color-secondary: #01CFC9;
 
 body {
-    font-family: 'poppins';
+    font-family: 'Poppins', sans-serif;
     background-color: $color-background;
 }
 a {
     text-decoration: none;
 }
 header {
-    margin-top: 53px;
+    margin-top: 30px;
     margin-left: 112px;
     margin-right: 100px;
     display: flex;
@@ -36,6 +36,7 @@ header {
         ul {
             display: flex;
             gap: 30px;
+            align-items: center;
             list-style-type: none;
             li {
                a {
@@ -81,6 +82,92 @@ header {
             background: $color-secondary;
             color: white;
 
+        }
+    }
+}
+
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -70px 100px 0 100px;
+    font-family: 'Poppins', sans-serif;
+    .left {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: flex-start;
+        h2 {
+            font-size: 48px;
+            color: $color-primary;
+            span {
+                color: $color-secondary;
+            }
+        }
+        p {
+            font-size: 22px;
+        }
+        button {
+            width: 40%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(to right, #0F3A50, #617eb3);
+            color: $color-secondary;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.5s;
+    
+            &:hover {
+                background: $color-secondary;
+                color: white;
+    
+            }
+        }
+        .connect {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: flex-start;
+            gap: 90px;
+            .connect-alt {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                .icon {
+                    padding: 10px;
+                    background-color: $color-primary;
+                    border-radius: 10px;
+                }
+
+               div {
+                 p {
+                    font-size: 16px;
+                 }
+               }
+
+            }
+          
+        }
+    }
+    .right {
+        position: relative;
+        .background {
+            width: 550px;
+            height: 550px;
+            border-radius: 50px;
+            background-color: $color-secondary;
+            position: absolute;
+            bottom: 7px;
+            right: 0;
+            z-index: -1;
+        }
+        img {
+            width: 100%;
+           
+          
         }
     }
 }
