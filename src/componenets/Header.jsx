@@ -1,17 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import Appointment from './Appointment'
+
 
 
 const Header = () => {
   return (
     <header>
-        <div className="left">
-            <img src="logo.jpeg" alt="Alper Karabağ Diş Logo" />
-            <div>
-                <h3>Alper Karabağ</h3>
-                <span> Diş Sağlığı Merkezi</span>
-            </div>
+        <div className="logo">
+                <h3>ALPER <span>KARABAĞ </span> </h3>
         </div>
         <nav>
             <ul>
@@ -27,10 +23,9 @@ const Header = () => {
                 <li>
                 <NavLink>İletişim</NavLink>
                 </li>
-              
             </ul>
-            <Appointment/>
         </nav>
+        <button>Online Randevu</button>
     </header>
   )
 }
