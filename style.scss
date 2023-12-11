@@ -8,6 +8,7 @@
 $color-background:#eefbfa;
 $color-primary: #0F2650;
 $color-secondary: #01CFC9;
+$color-third: #B7ECEA;
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -15,6 +16,24 @@ body {
 }
 a {
     text-decoration: none;
+}
+button {
+    width: 40%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(to right, #0F3A50, #617eb3);
+    color: $color-secondary;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+        background: $color-secondary;
+        color: white;
+
+    }
 }
 header {
     margin-top: 30px;
@@ -54,7 +73,6 @@ header {
                     bottom: -5px;
                     left: 0;
                     border-radius: 5px;
-                   
                     transition: all 0.4s;
                 }
                 &:hover::after {
@@ -62,28 +80,15 @@ header {
                     transform: translateY(5px);
                 }
                }
+               button {
+                width: 100%;
+               }
             }
         }
        
 
     }
-    button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 10px;
-        background: linear-gradient(to right, #0F3A50, #617eb3);
-        color: $color-secondary;
-        font-weight: bold;
-        font-size: 15px;
-        cursor: pointer;
-        transition: all 0.5s;
-
-        &:hover {
-            background: $color-secondary;
-            color: white;
-
-        }
-    }
+    
 }
 
 .banner {
@@ -108,24 +113,7 @@ header {
         p {
             font-size: 22px;
         }
-        button {
-            width: 40%;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(to right, #0F3A50, #617eb3);
-            color: $color-secondary;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.5s;
-    
-            &:hover {
-                background: $color-secondary;
-                color: white;
-    
-            }
-        }
+      
         .connect {
             display: flex;
             align-items: center;
@@ -137,9 +125,10 @@ header {
                 align-items: center;
                 gap: 20px;
                 .icon {
-                    padding: 10px;
+                    padding: 5px 10px;
                     background-color: $color-primary;
                     border-radius: 10px;
+                  
                 }
 
                div {
@@ -170,4 +159,78 @@ header {
           
         }
     }
+}
+
+.services {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+
+    h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: $color-secondary;
+    }
+    h2 {
+        font-size: 48px;
+        color: $color-primary;
+        font-weight: bold;
+    }
+    .cards {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 20px;
+        gap: 40px;
+        .card {
+            width: 280px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border: 1px solid $color-secondary;
+            border-radius: 45px;
+            transition: all 0.4s;
+            cursor: pointer;
+            h4 {
+                font-size: 22px;
+                color: $color-secondary;
+                font-weight: bold;
+            }
+            p {
+               
+                margin:16px 40px 45px 40px;
+                text-align: center;
+            }
+            div {
+                padding: 10px;
+                background-color: $color-third;
+                width: 90px;
+                height: 90px;
+                border-radius: 8px;
+                margin: 30px auto;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    place-items: center;
+                }
+            }
+            &:hover {
+                background-color: $color-primary;
+                p {
+                    color: white;
+                }
+
+            }
+        }
+    }
+    button {
+        width: 15%;
+        margin-top: 30px;
+    }
+    
 }
