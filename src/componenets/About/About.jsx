@@ -1,6 +1,7 @@
 import React from 'react'
 
 const About = () => {
+    
   return (
     <section className="about">
         <article className="left">
@@ -23,7 +24,7 @@ const About = () => {
             </div>
             <div className='info'>
             <p>Ödeme şartları</p>
-            <span>Kişiye özel ödeme planı sunuyoruz. Hastanın sağlığı her zaman ilk hedefimiz olmalıdır.</span>
+            <span>Kişiye özel ödeme planı sunuyoruz. Hastanın sağlığı her zaman ilk hedefimizdir.</span>
             </div>
           
         </div>

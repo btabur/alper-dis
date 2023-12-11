@@ -5,7 +5,7 @@ const Services = () => {
 
     const serviceList =[
         {
-         name:'Diş protezleri',
+         name:'İmplant',
          desc:'Şaşırtıcı sonuçlara sahip ileri teknoloji',
          photo:'./public/icons/icon-4.svg'   
         },

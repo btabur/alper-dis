@@ -1,7 +1,8 @@
 import React from 'react'
 import Banner from '../componenets/Banner'
-import Services from '../componenets/Services'
-import About from '../componenets/About'
+import Services from '../componenets/Services/Services'
+import About from '../componenets/About/About'
+import Info from '../componenets/Info'
 
 const MainPage = () => {
   return (
@@ -9,6 +10,7 @@ const MainPage = () => {
       <Banner/>
       <Services/>
       <About/>
+      <Info/>
     </div>
   )
 }
