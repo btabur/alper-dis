@@ -194,6 +194,7 @@ header {
             border: 1px solid $color-secondary;
             border-radius: 45px;
             transition: all 0.4s;
+            box-shadow: 0 0 10px black;
             cursor: pointer;
             h4 {
                 font-size: 22px;
@@ -233,4 +234,68 @@ header {
         margin-top: 30px;
     }
     
+}
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 100px;
+    .left {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+       
+        h3 {
+            font-size: 24px;
+            font-weight: bold;
+            color: $color-secondary;
+        }
+        h2 {
+            font-size: 48px;
+            font-weight: bold;
+            color: $color-primary;
+        }
+        p {
+            font-size: 20px;
+        }
+        .background {
+            padding: 10px;
+            background-color: $color-third;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .info {
+            p {
+                font-size: 22px;
+                color: $color-primary;
+                font-weight: bold;
+            }
+            span {
+                font-size: 16px;
+            }
+        }
+        .hour {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    }
+    .right {
+        position: relative;
+        .background {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            background-color: $color-secondary;
+            z-index: -1;
+            bottom: 10px;
+            right: 60px;
+            border-radius: 50px;
+        }
+        img {
+           width: 500px;
+        }
+    }
 }
