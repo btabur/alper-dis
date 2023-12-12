@@ -21,7 +21,7 @@ const Info = () => {
   return (
     <article className='info'>
         {cardCustomer.map((item,index)=> (
-            <div className="card">
+            <div key={index} className="card">
                 <p>{item.number}</p>
                 <span>{item.desc}</span>
             </div>

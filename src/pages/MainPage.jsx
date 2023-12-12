@@ -4,6 +4,7 @@ import Services from '../componenets/Services/Services'
 import About from '../componenets/About/About'
 import Info from '../componenets/Info'
 import Staff from '../componenets/Staff/Staff'
+import Questions from '../componenets/Questions/Questions'
 
 const MainPage = () => {
   return (
@@ -13,6 +14,7 @@ const MainPage = () => {
       <About/>
       <Info/>
       <Staff/>
+      <Questions/>
     </div>
   )
 }

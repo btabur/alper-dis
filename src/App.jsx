@@ -7,7 +7,7 @@ import MainPage from './pages/MainPage'
 const App = () => {
   return (
       <BrowserRouter>
-      <Header/>
+         <Header/>
         <Routes>
         <Route path='/' element={<MainPage/>}/>
         </Routes>

@@ -33,7 +33,7 @@ const Services = () => {
     <h2>Tedavi Listemiz</h2>
     <div className='cards'>
         {serviceList.map((item,index)=> (
-                <Card service={item}/>
+                <Card key={index} service={item}/>
         ))}
     </div>
     <button>Daha Fazla</button>
