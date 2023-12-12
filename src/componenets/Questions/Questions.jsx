@@ -37,6 +37,10 @@ const Questions = () => {
                     ))
                 }
             </div>
+           
+            <button>Daha Fazla</button>
+        
+           
 
    </section>
   )

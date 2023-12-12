@@ -5,6 +5,7 @@ import About from '../componenets/About/About'
 import Info from '../componenets/Info'
 import Staff from '../componenets/Staff/Staff'
 import Questions from '../componenets/Questions/Questions'
+import Comments from '../componenets/Comments/Comments'
 
 const MainPage = () => {
   return (
@@ -15,6 +16,7 @@ const MainPage = () => {
       <Info/>
       <Staff/>
       <Questions/>
+      <Comments/>
     </div>
   )
 }
