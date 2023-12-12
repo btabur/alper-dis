@@ -20,11 +20,11 @@ const About = () => {
         </div>
         <div className='hour'>
             <div className='background'>
-            <img src="./public/icons/icon-5.png" />
+                <img src="./public/icons/icon-5.png" />
             </div>
             <div className='info'>
-            <p>Ödeme şartları</p>
-            <span>Kişiye özel ödeme planı sunuyoruz. Hastanın sağlığı her zaman ilk hedefimizdir.</span>
+                <p>Ödeme şartları</p>
+                <span>Kişiye özel ödeme planı sunuyoruz. Hastanın sağlığı her zaman ilk hedefimizdir.</span>
             </div>
           
         </div>
