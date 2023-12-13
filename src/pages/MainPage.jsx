@@ -7,6 +7,7 @@ import Staff from '../componenets/Staff/Staff'
 import Questions from '../componenets/Questions/Questions'
 import Comments from '../componenets/Comments/Comments'
 import Contact from '../componenets/Contact'
+import Footer from '../componenets/Footer'
 
 const MainPage = () => {
   return (
@@ -19,6 +20,7 @@ const MainPage = () => {
       <Questions/>
       <Comments/>
       <Contact/>
+      <Footer/>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import Card from './Card'
 const Staff = () => {
     const doctors = [
         {
-            photo:'./public/doctor-1.png',
+            photo:'./profil.png',
             name: 'Alper Karadağ',
             branch: ' Diş Hekimi'
         }, 

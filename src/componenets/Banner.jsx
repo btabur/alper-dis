@@ -35,7 +35,7 @@ const Banner = () => {
         <div className="right">
 
             <div className="background"></div>
-            <img src="./photo-banner.svg" alt="Alper Karabağ" />
+            <img src="./profil.png" alt="Alper Karabağ" />
         </div>
     </section>
   )

@@ -14,7 +14,7 @@ const About = () => {
             </div>
             <div className='info'>
                 <p>Herkes için uygun saatler</p>
-                <span>Sabah 9'dan akşam 8'e kadar sürekli olarak açıktır.</span>
+                <span>Sabah 9'dan akşam 17'ye kadar sürekli olarak açıktır.</span>
             </div>
            
         </div>
