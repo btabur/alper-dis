@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header>
         <div className="logo">
-                <h3>ALPER <span>KARABAĞ </span> </h3>
+               <img src="./public/logo.png" alt="" />
         </div>
         <nav>
             <ul>

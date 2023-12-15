@@ -3,8 +3,9 @@ import React from 'react'
 const About = () => {
     
   return (
-    <section className="about">
-        <article className="left">
+    <section className="about-container">
+       <div className='about'>
+       <article className="left">
         <h3>Hakkımızda</h3>
         <h2>Biz Kimiz?</h2>
         <p>Alper Karabağ Diş Sağlığı Merkezi, Kalite, Çevre ve Güvenlik alanında 3 ISO Sertifikasına sahip ilk özel sağlık şirketidir. Hastalara sunulan hizmetlerin kalitesi üçüncü taraf kuruluşlar tarafından onaylanmıştır ve yenilik ve eğitim, mesleğin gelişiminde temel bir rol oynamaktadır.</p>
@@ -33,6 +34,12 @@ const About = () => {
             <div className="background"></div>
             <img src="./public/about.png" alt="" />
         </article>
+       </div>
+       <article>
+       <video className='video' width="740" height="417" controls>
+       <source src="./public/video.mp4" type="video/mp4" />
+       </video>
+       </article>
       
     </section>
   )
