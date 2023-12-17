@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-
+import { IoMenu } from "react-icons/io5";
 
 
 const Header = () => {
+  const [showMenu,setShowMenu]= useState(false)
 
   return (
     <header>
@@ -11,7 +12,7 @@ const Header = () => {
                <img src="./public/logo.png" alt="" />
         </div>
         <nav>
-            <ul>
+            <ul className={showMenu ? 'show' : ''}>
                 <li>
                     <NavLink to={'/'}>AnaSayfa</NavLink>
                 </li>
@@ -25,10 +26,11 @@ const Header = () => {
                 <NavLink>İletişim</NavLink>
                 </li>
                 <li>
-                <button>Giriş Yap</button>
+              
                 </li>
             </ul>
-           
+            <button>Giriş Yap</button>
+            <IoMenu onClick={()=> setShowMenu(!showMenu)}  className='menu'/>
         </nav>
        
     </header>

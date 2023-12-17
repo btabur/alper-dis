@@ -44,6 +44,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .menu {
+        display: none;
+    }
     .logo {
        img {
         width: 120px;
@@ -918,5 +921,204 @@ footer {
 
 //telefon
 @media only screen and (max-width: 580px) {
+    button {
+        width: 100px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+    header {
+        margin: 10px;
+        justify-content: space-between;
+        .logo {
+          img {
+            width: 60px;
+            height: 60px;
+          }
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            .menu {
+                display: inline-block;
+                font-size: 24px;
+                cursor: pointer;
+
+            }
+            ul {
+               position: absolute;
+               display: flex;
+               flex-direction: column;
+               justify-content: space-around;
+               top: 30px;
+               background-color: $color-primary;
+               height: 90vh;
+               padding: 0 40px;
+               z-index: 10;
+               right: -250px;
+               border-radius: 20px;
+               transition: all 0.5s;
+              li {
+                a{
+                    color: white;
+                }
+                
+              }
+            }
+            ul.show {
+                right: 10px;
+            }
+           
+    
+        }
+
+    }
+    .banner {
+        margin: 15px;
+        flex-direction:column;
+        .left {
+            width: 100%;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            h2 {
+                font-size: 30px; 
+                text-align: center;
+             
+            }
+            p {
+                font-size: 16px;
+                width: 100%;
+            }
+            button {
+                width: 150px;
+                padding: 10px;
+                text-align: center;
+                margin: 20px;
+
+            }
+          
+            .connect {
+                justify-content: space-around;
+            }
+        }
+        .right {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            .background {
+                width: 240px;
+                height: 240px;
+               left: -30px;
+               bottom: 0;
+              transform: translateX(50%);
+            }
+            img {
+                width: 60%;
+            }
+        }
+    }
+    .services {
+        h3 {
+            font-size: 18px;
+        }
+        h2 {
+            font-size: 30px;
+        }
+        .cards {
+           margin: 10px 20px;
+            .card {
+                width: 200px;
+                height: 200px;
+                h4 {
+                    font-size: 16px;
+                }
+                p {
+                    font-size: 13px;
+                    width: 100%;
+                } 
+            }
+        }
+        button {
+            width: 150px;
+            padding: 10px;
+        }
+        
+    }
+    .about-container {
+        .about {
+            .left {
+                p {
+                    font-size: 15px;
+                    text-align: center;
+                }
+            }
+         
+        }
+        .video {
+            height: 300px;
+           
+          }
+    
+    } 
+    .info {
+       flex-wrap: wrap;
+       gap: 10px;
+        .card {
+            min-width: 160px;
+            max-width: 200px;
+            max-height: 80px;
+            padding:10px;
+            margin-bottom: 20px;
+            p {
+                font-size: 18px;
+            }
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+    .staff {
+        margin: 20px;
+        .cards {
+          flex-wrap: wrap;
+          .card {
+            width: 70%;
+          }
+    
+        }
+       
+    }
+    .questions {
+        h2 {
+            font-size: 25px;
+        }
+        button {
+            width: 120px;
+            padding: 10px;
+        }
+        .cards {
+            .card {
+                padding: 10px;
+                p {
+                    font-size: 16px;
+                }
+                span {
+                    font-size: 12px;
+                    text-align: center;
+                }
+                .icons {
+                    top: 2px;
+                    right: 2px;
+                    .icon {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+
 
 }
