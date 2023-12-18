@@ -19,7 +19,7 @@ a {
     text-decoration: none;
 }
 button {
-    width: 30%;
+    width: 180px;
     text-align: center;
     padding: 10px 20px;
     border: none;
@@ -54,6 +54,7 @@ header {
        }
     }
     nav {
+        display: flex;
         ul {
             display: flex;
             gap: 30px;
@@ -123,15 +124,16 @@ header {
             width: 100%;
             justify-content: flex-start;
             gap: 90px;
+           
             .connect-alt {
                 display: flex;
                 align-items: center;
                 gap: 20px;
+              
                 .icon {
                     padding: 5px 10px;
                     background-color: $color-primary;
                     border-radius: 10px;
-                  
                 }
 
                div {
@@ -236,7 +238,7 @@ header {
         }
     }
     button {
-        width: 15%;
+       
         margin-top: 30px;
     }
     
@@ -627,6 +629,14 @@ footer {
     display: flex;
     justify-content: space-around;
     padding: 30px;
+  
+    .info {
+        font-size: 14px;
+        a { 
+            cursor: pointer;
+            color: $color-secondary;
+        }
+    }
     .left {
         display: flex;
         flex-direction: column;
@@ -1119,6 +1129,87 @@ footer {
             }
         }
     }
+    .comments {
+        margin: 30px;
+        h2 {
+            font-size: 25px;
+        }
+        .cards {
+            flex-wrap: wrap;
+            .card {
+                height: 200px;
+            }
+        }
+    
+    }
+    .contact {
+        gap: 5px;
+        padding: 10px;
+        width: 96%;
+        h3 {
+            font-size: 25px;
 
+        }
+        p {
+            font-size: 16px;
+            text-align: center;
+        }
+        a {
+            margin: 10px;
+            padding: 5px 15px;
+        }
+        form {
+            div {
+             flex-wrap: wrap;
+             align-items: center;
+                input {
+                    width: 100%;
+                }
+            }
+            textarea {
+                width: 90%;
+                height: 100px;
+            }
+        }
+    }
+    footer {
+        padding: 15px;
+        flex-direction: column;
+        .left {
+            p {
+                width: 90%;
+                font-size: 13px;
+            }
+    
+            .logo {
+                h3{
+                    font-size: 20px;
+                }
+            }
+            .socials {
+                justify-content: center;
+                margin: 10px;
+                gap: 30px;
+            }
+    
+        }
+        .right {
+            h3 {
+                font-size: 18px;
+             
+            }
+            div {
+                .icon {
+                    font-size: 15px !important;
+                }
+               span {
+                font-size: 12px;
+               }
+    
+            }
+        }
+    
+    
+    }
 
 }

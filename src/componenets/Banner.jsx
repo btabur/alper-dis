@@ -2,6 +2,7 @@ import React from 'react'
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 const Banner = () => {
+  const phoneNumber = "+1234567890"; 
   return (
     <section className='banner'>
         <div className="left">
@@ -11,12 +12,14 @@ const Banner = () => {
             <div className='connect'>
                 <div className='connect-alt'>
                     <div className="icon">
-                    <FaPhoneAlt style={{color:'#01CFC9'}}/>
+                      <a href={`tel:${phoneNumber}`}>
+                      <FaPhoneAlt style={{color:'#01CFC9'}}/>
+                      </a>
+                   
                     </div>
-                
                   <div>
                     <p>Telefon</p>
-                    <p>555 555 55 55</p>
+                    <p> <a href={`tel:${phoneNumber}`} style={{color:'black'}}>{phoneNumber}</a></p>
                   </div>
                 </div>
                 <div className='connect-alt'>

@@ -11,17 +11,16 @@ import Footer from '../componenets/Footer'
 
 const MainPage = () => {
   return (
-    <div>
+    <main>
       <Banner/>
-      <Services/>
+      <Services isDetail={false}/>
       <About/>
       <Info/>
       <Staff/>
       <Questions/>
       <Comments/>
       <Contact/>
-      <Footer/>
-    </div>
+    </main>
   )
 }
 

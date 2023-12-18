@@ -17,7 +17,7 @@ const Header = () => {
                     <NavLink to={'/'}>AnaSayfa</NavLink>
                 </li>
                 <li>
-                <NavLink>Hizmetlerimiz</NavLink>
+                <NavLink to={'/services'}>Hizmetlerimiz</NavLink>
                 </li>
                 <li>
                 <NavLink>Hekimlerimiz</NavLink>

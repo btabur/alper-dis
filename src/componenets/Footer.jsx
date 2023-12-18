@@ -30,23 +30,24 @@ const Footer = () => {
     <article className='right'>
         <h3>İletişim</h3>
         <div>
-        <MdEmail style={{color:'#0F2650', fontSize:'20px'}} />
+        <MdEmail className='icon'  style={{color:'#0F2650', fontSize:'20px'}} />
         <span>dralper@gmail.com</span>
         </div>
         <div>
-        <FaPhoneAlt style={{color:'#0F2650', fontSize:'20px'}} />
+        <FaPhoneAlt className='icon' style={{color:'#0F2650', fontSize:'20px'}} />
         <span>555 555 55 55</span>
         </div>
         <div>
-        <TbClockHour3 style={{color:'#0F2650', fontSize:'20px'}} />
+        <TbClockHour3 className='icon'  style={{color:'#0F2650', fontSize:'20px'}} />
         <span>Hafta içi 09:00 - 17:00</span>
         </div>
         <div>
-        <IoLocation style={{color:'#0F2650', fontSize:'20px'}}   />
+        <IoLocation className='icon'  style={{color:'#0F2650', fontSize:'20px'}}   />
         <span>Bingöl/Merkez</span>
         </div>
+        <p className='info'>Tüm Hakları Saklıdır | <a href="https://www.instagram.com/btabur03/" target='_blank'>Web Tasarım Merkezi</a></p>
     </article>
-  
+      
    </footer>
   )
 }
