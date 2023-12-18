@@ -13,7 +13,7 @@ const MainPage = () => {
   return (
     <main>
       <Banner/>
-      <Services isDetail={false}/>
+      <Services/>
       <About/>
       <Info/>
       <Staff/>

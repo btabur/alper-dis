@@ -3,7 +3,7 @@ import Card from './Card'
 import { Link } from 'react-router-dom'
 import { serviceList } from './ServisList'
 
-const Services = ({isDetail}) => {
+const Services = () => {
   return (
    <section className="services">
     <h3>Hizmetlerimiz</h3>
