@@ -6,8 +6,11 @@ const ServicesDetail = ({id}) => {
   return (
    <article className='services-detail'>
     <img  src={service.detail.photo}/>
-    <h2>{service.detail.title}</h2>
-    <p>{service.detail.desc}</p>
+    <div>
+        <h2>{service.detail.title}</h2>
+        <p>{service.detail.desc}</p>
+    </div>
+   
    </article>
   )
 }

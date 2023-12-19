@@ -29,7 +29,7 @@ const Banner = () => {
                
                 <div>
                     <p>Adres:</p>
-                    <p>Bingöl /Merkez</p>
+                    <p>  Kültür Cad. Baluken İş merk. No:64 kat 1 daire no:5-6  Bingöl /Merkez</p>
                 </div>
 
                 </div>

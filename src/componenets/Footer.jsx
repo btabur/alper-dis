@@ -8,6 +8,7 @@ import { TbClockHour3 } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
 
 const Footer = () => {
+    
   return (
    <footer>
     <article className='left'>
@@ -19,10 +20,10 @@ const Footer = () => {
             <div className="backround">
             <BsTwitterX style={{color:'#01CFC9'}} />
             </div>
-            <div className="backround">
+            <div onClick={()=> window.open('https://www.facebook.com/alper.karabag.96', '_blank')} className="backround">
             <TfiFacebook style={{color:'#01CFC9'}} />
             </div>
-            <div className="backround">
+            <div onClick={()=> window.open('https://www.instagram.com/dt.alper_karabag/', '_blank')} className="backround">
             <GrInstagram  style={{color:'#01CFC9'}}/>
             </div>
         </div>

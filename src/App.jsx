@@ -5,6 +5,7 @@ import Header from './componenets/Header'
 import MainPage from './pages/MainPage'
 import ServicesPage from './pages/ServicesPage'
 import Footer from './componenets/Footer'
+import WhatsApp from './componenets/WhatsApp'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path='/' element={<MainPage/>}/>
         <Route path='/services' element={<ServicesPage/>}/>
         </Routes>
+        <WhatsApp/>
         <Footer/>
       
       </BrowserRouter>
