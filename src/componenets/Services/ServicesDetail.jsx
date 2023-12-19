@@ -1,8 +1,14 @@
 import React from 'react'
+import { ServicesListAll } from './ServisList'
 
-const ServicesDetail = () => {
+const ServicesDetail = ({id}) => {
+  const service = ServicesListAll.find(i=>i.id==id);
   return (
-    <div>ServicesDetail</div>
+   <article className='services-detail'>
+    <img  src={service.detail.photo}/>
+    <h2>{service.detail.title}</h2>
+    <p>{service.detail.desc}</p>
+   </article>
   )
 }
 

@@ -246,6 +246,20 @@ header {
     }
     
 }
+.services-detail {
+    width: 80%;
+    margin: 10px auto;
+    img {
+        width: 500px;
+    }
+    h2 {
+        font-size: 30px;
+        color: $color-primary;
+    }
+    p {
+        width: 60%;
+    }
+}
 .about-container {
     display: flex;
     align-items: center;
@@ -806,6 +820,15 @@ footer {
             }
         }
         
+    }
+    .services-detail {
+        width: 90%;
+        img {
+            width: 400px;
+        }
+        p {
+            width: 90%;
+        }
     }
    .about-container {
     display: flex;

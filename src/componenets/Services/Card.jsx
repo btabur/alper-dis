@@ -1,8 +1,13 @@
 import React from 'react'
 
-const Card = ({service}) => {
+const Card = ({service, setId}) => {
+  const handleClick = ()=> {
+         if(setId){ 
+          setId(service.id)
+         }
+  }
   return (
-    <article className='card'>
+    <article onClick={handleClick} className='card'>
         <div>
         <img src={service.photo} alt="" />
         </div>
