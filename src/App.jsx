@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage'
 import ServicesPage from './pages/ServicesPage'
 import Footer from './componenets/Footer'
 import WhatsApp from './componenets/WhatsApp'
+import '@splidejs/react-splide/css/skyblue';
 
 const App = () => {
   return (

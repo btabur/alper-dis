@@ -38,7 +38,7 @@ const Questions = () => {
                 }
             </div>
            
-            <button>Daha Fazla</button>
+            <button className='button'>Daha Fazla</button>
         
            
 

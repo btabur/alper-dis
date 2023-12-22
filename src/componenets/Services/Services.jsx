@@ -19,7 +19,7 @@ const Services = () => {
     </div>
    
     <Link to={'/services'}>
-      <button>Daha Fazla</button>
+      <button className='button'>Daha Fazla</button>
     </Link>
    </section>
   )

@@ -29,7 +29,7 @@ const Header = () => {
               
                 </li>
             </ul>
-            <button>Giriş Yap</button>
+            <button className='button'>Giriş Yap</button>
             <IoMenu onClick={()=> setShowMenu(!showMenu)}  className='menu'/>
         </nav>
        

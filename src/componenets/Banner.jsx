@@ -2,13 +2,13 @@ import React from 'react'
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 const Banner = () => {
-  const phoneNumber = "+1234567890"; 
+  const phoneNumber = "05054898518"; 
   return (
     <section className='banner'>
         <div className="left">
             <h2>Sağlıklı Gülüşler İçin, <span>Doğru</span> Adrestesiniz!</h2>
             <p>Her hastanın ihtiyaçlarını karşılayarak, her tür tedavide uzmanlarla yüksek kaliteli dişhekimliği hizmetleri sunuyoruz </p>
-            <button>Online Randevu</button>
+            <button className='button'>Online Randevu</button>
             <div className='connect'>
                 <div className='connect-alt'>
                     <div className="icon">
