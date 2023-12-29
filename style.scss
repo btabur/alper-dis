@@ -16,6 +16,9 @@ body {
     background-color: $color-background;
     overflow-x: hidden;
 }
+.app {
+    position: relative;
+}
 a {
     text-decoration: none;
 }
@@ -79,21 +82,24 @@ a {
     }
   }
 header {
-    padding: 5px 100px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 1px 50px;
     align-items: center;
-    background-color: #a9c9ff94;
-    background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);
-    
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color:#a1b8e2b6;
     
     .menu {
         display: none;
     }
     .logo {
        img {
-        width: 120px;
-        height: 120px;
+        width: 90px;
+        height: 90px;
        }
     }
     nav {
@@ -144,6 +150,7 @@ header {
     font-family: 'Poppins', sans-serif;
     background-color: #21D4FD;
     background-image: linear-gradient(19deg,#B721FF 0%, #21D4FD 100%);
+    padding-top: 100px;
     
 
     .left {
@@ -767,27 +774,6 @@ footer {
 
 
 }
-// .slide-2 {
-//     display: flex;
-//     padding: 20px;
-//     height: 80vh;
-//     align-items: center;
-//     background-color: #8EC5FC;
-//     background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-
-//     .info {
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: center;
-//         width: 50%;
-//     }
-//     .right {
-//         img {
-//             border-radius: 20px;
-//             box-shadow: 0 0 10px black;
-//         }
-//     }
-// }
 .slide-2 {
     background-image: url('/public/slide_2.jpg');
     .info {
@@ -802,12 +788,13 @@ footer {
     background-repeat: no-repeat;
     background-size: cover;
      position: relative;
+   
      .info {
          display: flex;
          flex-direction: column;
          justify-content: center;
          position: absolute;
-         top: 50px;
+         top: 150px;
          right: 30px;
          gap: 20px;
          width: 50%;
@@ -817,7 +804,90 @@ footer {
 }
 .slide-1 {
     background-image: url('/public/slide_1.jpg');
-    
+}
+.login-page {
+    background-image: url('/dis-eti.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 80vh;
+    position: relative;
+    &::after {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color:#0f2650b5;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        bottom: 20px;
+        left: 150px;
+        padding: 30px 50px;
+        border-radius: 10px;
+        background-color: white;
+        z-index: 4;
+        box-shadow: 0 0 10px black;
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100px;
+            }
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            div {
+                display: flex;
+                flex-direction: column;
+                input {
+                    padding: 5px 10px;
+                    width: 300px;
+                    border-radius: 5px;
+                    border: 1px solid gray;
+                    font-size: 15px;
+                }
+            }
+        }
+        .google {
+            display: flex;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            justify-content: center;
+           border: 1px solid gray;
+            padding: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 10px black;
+            transition: all 0.4s;
+           
+            &:hover {
+                box-shadow: 0 0 10px $color-secondary;
+                border: 1px solid $color-secondary;
+            }
+            &:active {
+                box-shadow: none;
+            }
+        }
+        p {
+            font-size: 12px;
+            span {
+                color:$color-primary;
+                cursor: pointer;
+                font-size: 14px;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 
@@ -852,7 +922,8 @@ footer {
 
     }
     .banner {
-        margin: 15px;
+        padding: 15px;
+        padding-top: 100px;
         .left {
             width: 60%;
             gap: 10px;
@@ -1081,7 +1152,6 @@ footer {
         }
       }
     header {
-        padding: 10px;
         width: 100%;
         justify-content: space-between;
         .logo {
@@ -1130,7 +1200,8 @@ footer {
 
     }
     .banner {
-        margin: 15px;
+        padding-top: 100px;
+       
         flex-direction:column;
         .left {
             width: 100%;
@@ -1364,6 +1435,12 @@ footer {
         }
     
     
+    }
+
+    .login-page {
+        .card {
+            left: 20px;
+        }
     }
 
 }

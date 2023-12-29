@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { IoMenu } from "react-icons/io5";
 
 
 const Header = () => {
   const [showMenu,setShowMenu]= useState(false)
+  const navigate = useNavigate()
 
   return (
     <header>
@@ -29,7 +30,7 @@ const Header = () => {
               
                 </li>
             </ul>
-            <button className='button'>Giriş Yap</button>
+            <button onClick={()=> navigate('/login') } className='button'>Giriş Yap</button>
             <IoMenu onClick={()=> setShowMenu(!showMenu)}  className='menu'/>
         </nav>
        
