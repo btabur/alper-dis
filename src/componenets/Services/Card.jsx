@@ -4,6 +4,7 @@ const Card = ({service, setId}) => {
   const handleClick = ()=> {
          if(setId){ 
           setId(service.id)
+          window.scrollTo({ top: 0, behavior: 'smooth' });
          }
   }
   return (

@@ -4,34 +4,26 @@ import { IoMenu } from "react-icons/io5";
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import { toast } from 'react-toastify';
+import { IoPersonCircle } from "react-icons/io5";
 
 
-const Header = () => {
+const Header = ({stateUser}) => {
   const [showMenu,setShowMenu]= useState(false)
   const navigate = useNavigate()
   const [currentuser,setUser] = useState(null)
 
   useEffect(()=> {
-    onAuthStateChanged(auth, (user) => {
+    const user= localStorage.getItem('UserAlper')
       if(user) {
-        const uid = user.uid;
         setUser(user)
-      }
-    })
-  },[])
-
-  const handleLoginOut = ()=> {
-    if(currentuser) {
-      signOut(auth)
-      .then(()=>{
+      }else {
         setUser(null)
-        toast.success('Çıkış Yapıldı')})
-      .catch(()=> toast.error('Bir hata oluştu'))
-    }else {
-      navigate('/login')
-    }
-    
+      }
+  
+  },[stateUser])
 
+  const handleLogin = ()=> {
+      navigate('/login')
   }
   return (
     <header>
@@ -56,8 +48,8 @@ const Header = () => {
               
                 </li>
             </ul>
-            <button onClick={ handleLoginOut}
-             className='button'>{!currentuser ? 'Giriş Yap': 'Çıkış Yap' }</button>
+           { currentuser ? <IoPersonCircle onClick={()=> navigate('/randevu')} style={{fontSize:'30px', cursor:'pointer'}} /> : <button onClick={ handleLogin}
+             className='button'>Giriş Yap</button>}
             <IoMenu onClick={()=> setShowMenu(!showMenu)}  className='menu'/>
         </nav>
        

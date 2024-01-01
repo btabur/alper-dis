@@ -1,14 +1,27 @@
 import React from 'react'
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
+import { useNavigate } from 'react-router';
+import { auth } from '../firebase/config';
+import { toast } from 'react-toastify';
 const Banner = () => {
   const phoneNumber = "05054898518"; 
+  const navigate = useNavigate()
+  //todo user var ise yönlendirme yapılacak yoksa login sayfasına yönlendirme yapılacak
+  const handleRandevu = ()=> {
+    if(auth.currentUser) {
+      navigate('/randevu')
+    }else {
+      navigate('/login')
+      toast.info('Randevu almak için Oturum açmanız gerekir')
+    }
+  }
   return (
     <section className='banner'>
         <div className="left">
             <h2>Sağlıklı Gülüşler İçin, <span>Doğru</span> Adrestesiniz!</h2>
             <p>Her hastanın ihtiyaçlarını karşılayarak, her tür tedavide uzmanlarla yüksek kaliteli dişhekimliği hizmetleri sunuyoruz </p>
-            <button className='button'>Online Randevu</button>
+            <button onClick={handleRandevu} className='button'>Online Randevu</button>
             <div className='connect'>
                 <div className='connect-alt'>
                     <div className="icon">

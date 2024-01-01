@@ -304,7 +304,7 @@ header {
 }
 .services-detail {
     width: 100%;
-    margin: 40px;
+    padding-top: 100px;
     display: flex;
     gap: 50px;
     justify-content: space-around;
@@ -885,6 +885,64 @@ footer {
                 cursor: pointer;
                 font-size: 14px;
                 text-decoration: underline;
+            }
+        }
+    }
+}
+
+.randevu {
+    padding-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 150px;
+    position: relative;
+    .btn-logout {
+        position: absolute;
+        top: 110px;
+        right: 0;
+       
+
+    }
+
+    .card {
+        width: 90%;
+        padding: 20px;
+        background-color: $color-primary;
+        color: white;
+        border-radius: 10px;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .body {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
+            .left {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                h3 {
+                    padding-bottom: 3px;
+                    border-bottom: 1px solid $color-secondary;
+                }
+            }
+            .right {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                div {
+                    display: flex;
+                    gap: 10px;
+                    .input {
+                        color: black;
+                        height: 40px;
+                        border-radius: 8px;
+                        padding: 3px;
+                    }
+                }
             }
         }
     }

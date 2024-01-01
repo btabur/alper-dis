@@ -4,7 +4,7 @@ import { auth, provider } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Login = () => {
+const Login = ({setStateUser}) => {
     const [isLogin,setIsLogin] = useState(true);
     const [authData,setAuthData] = useState({
         name:'',
@@ -14,43 +14,42 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const handleLogin = ()=> {
-        signInWithPopup(auth, provider).then(()=>navigate('/randevu'))
-    }
     const handleInput = (e) => {
         setAuthData({...authData, [e.target.name]:e.target.value})
         console.log(authData.email, authData.password)
     }
+
+    //goole ile giriş için
+    const handleLogin = ()=> {
+        signInWithPopup(auth, provider).then((res)=>{
+            localStorage.setItem('UserAlper',res.user.refreshToken)
+            toast.success('Giriş Başarılı')
+            setStateUser(res.user.refreshToken)
+            navigate('/randevu')})
+            .catch(()=> toast.danger('Bir hata oluştu'))
+    }
+   
+    //email ile giriş için
     const saveAuthWithEmail =async ()=> {
 
         if(isLogin) {
             //kayıt işlemleri
-           try {
-            const data = await createUserWithEmailAndPassword(auth, authData.email, authData.password);
-            const user = data.user;
-            if(user) {
-                toast.success('Kayıt Edildi')
+            createUserWithEmailAndPassword(auth, authData.email, authData.password)
+            .then((res)=> {
+                localStorage.setItem('UserAlper',res.user.refreshToken)
+                setStateUser(res.user.refreshToken)
+                toast.success('Giriş Yapıldı')
                 navigate('/randevu')
-            }
-            
-           } catch (error) {
-                toast.error('Bir hata oldu')
-            
-           }
+            }).catch(()=> toast.danger('Bir hata oluştu'))
         }else {
             //giriş işlemleri
-            try {
-                const data = await signInWithEmailAndPassword(auth, authData.email, authData.password);
-                const user = data.user;
-                if(user) {
-                    toast.success('Giriş Yapıldı')
-                    navigate('/randevu')
-                }
-                
-               } catch (error) {
-                    toast.error('Bir hata oldu')
-                
-               }
+            signInWithEmailAndPassword(auth, authData.email, authData.password)
+            .then((res)=> {
+                localStorage.setItem('UserAlper',res.user.refreshToken)
+                toast.success('Tekrar Hoş Geldiniz')
+                setStateUser(res.user.refreshToken)
+                navigate('/randevu')
+            }).catch(()=> toast.danger('Bir hata oluştu'))
         }
 
     }

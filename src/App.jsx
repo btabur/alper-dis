@@ -13,16 +13,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
+  //state de kullanıcının giriş yapıp yapmadığını tutuyoruz 
+  const [stateUser,setStateUser]= useState(null)
   return (
      <div className='app'>
       <ToastContainer/>
        <BrowserRouter>
-         <Header/>
+         <Header stateUser={stateUser}/>
         <Routes>
-        <Route path='/' element={<MainPage/>}/>
+        <Route path='/' element={<MainPage />}/>
         <Route path='/services' element={<ServicesPage/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/randevu' element = {<RandevuPage/>}/>
+        <Route path='/login' element={<Login setStateUser={setStateUser}/>}/>
+        <Route path='/randevu' element = {<RandevuPage setStateUser={setStateUser}/>}/>
         </Routes>
         <WhatsApp/>
         <Footer/>
