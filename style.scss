@@ -933,16 +933,22 @@ footer {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-                div {
+                form {
                     display: flex;
+                    flex-direction: column;
                     gap: 10px;
-                    .input {
-                        color: black;
-                        height: 40px;
-                        border-radius: 8px;
-                        padding: 3px;
+                    div {
+                        display: flex;
+                        gap: 10px;
+                        .input {
+                            color: black;
+                            height: 40px;
+                            border-radius: 8px;
+                            padding: 3px;
+                        }
                     }
                 }
+               
             }
         }
     }

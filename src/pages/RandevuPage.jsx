@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
-import { auth } from '../firebase/config'
+import { auth,db } from '../firebase/config'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { signOut } from '@firebase/auth'
+import {addDoc, collection} from 'firebase/firestore'
 
 const RandevuPage = ({setStateUser}) => {
   const options = [
@@ -18,6 +19,12 @@ const RandevuPage = ({setStateUser}) => {
     { value: 'dis-eti-hastaliklari', label: 'Diş Eti Hastalıkları' },
     { value: 'cocuk-dis', label: 'Çocuk diş Hekimliği' },
   ]
+  const [formData, setFormData] = useState({
+    treatment:'',
+    phone:'',
+    name:'',
+    date:''
+  })
   const navigate = useNavigate()
   useEffect(()=> {
     // izinsiz girişleri engelliyoruz
@@ -35,6 +42,29 @@ const RandevuPage = ({setStateUser}) => {
         navigate('/')
       })
   }
+  const handleChange = (e)=> {
+    setFormData({...formData, [e.target.name]:e.target.value})
+
+   
+
+  }
+  const handleSubmit = async (e)=> {
+    e.preventDefault()
+    await addDoc(randevularRef, {
+      treatment:formData.treatment,
+      date:formData.date,
+      user:{
+        name:formData.name,
+        uid:auth.currentUser.uid
+      }
+  }).then(()=> toast.success('Kaydınız Alınmıştır'))
+
+  }
+  // useEffect(()=>{
+  //   console.log(formData)
+  // },[formData])
+
+ const randevularRef =collection(db,'randevular')
   return (
     <main className='randevu'>
 
@@ -52,16 +82,19 @@ const RandevuPage = ({setStateUser}) => {
           </div>
           <div className="right">
             <p>Randevu Formu</p>
-            <div>
-            <Select className='input' placeholder='Tedavi Türü Seçin' required options={options} />
-            <input className='input' type="text" placeholder='Telefon' required />
-            </div>
-            <div>
-              <input className='input' type="text" placeholder='Ad soyad' required />
-              <input className='input' type="date" required/>
-             
-            </div>
-            <button className='button'>Gönder</button>
+            <form>
+              <div>
+              <Select   onChange={(e)=> setFormData({...formData, ['treatment']:e.value})} className='input' placeholder='Tedavi Türü Seçin' required options={options} />
+              <input name='phone' onChange={handleChange} className='input' type="text" placeholder='Telefon' required />
+              </div>
+              <div>
+                <input name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
+                <input name='date' onChange={handleChange} className='input' type="date" required/>
+              
+              </div>
+              <button onClick={handleSubmit} type='submit'  className='button'>Gönder</button>
+            </form>
+           
           </div>
           </div>
         

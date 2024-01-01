@@ -12,9 +12,11 @@ import RandevuPage from './pages/RandevuPage'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const App = () => {
   //state de kullanıcının giriş yapıp yapmadığını tutuyoruz 
   const [stateUser,setStateUser]= useState(null)
+
   return (
      <div className='app'>
       <ToastContainer/>

@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Login = ({setStateUser}) => {
+
+
+  //  auth.currentUser.displayName
     const [isLogin,setIsLogin] = useState(true);
     const [authData,setAuthData] = useState({
         name:'',
