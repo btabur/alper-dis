@@ -4,6 +4,7 @@ import { auth, provider } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+
 const Login = ({setStateUser}) => {
 
 
@@ -56,6 +57,7 @@ const Login = ({setStateUser}) => {
         }
 
     }
+
   return (
     <main className='login-page'>
         <article className="card">

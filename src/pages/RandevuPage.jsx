@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { signOut } from '@firebase/auth'
 import {addDoc, collection} from 'firebase/firestore'
+import { doc, onSnapshot } from "firebase/firestore";
+import TreatmentItem from '../componenets/TreatmentItem'
 
 const RandevuPage = ({setStateUser}) => {
   const options = [
@@ -25,6 +27,9 @@ const RandevuPage = ({setStateUser}) => {
     name:'',
     date:''
   })
+
+  const [treatmentList,setTreatmentList] = useState([])
+
   const navigate = useNavigate()
   useEffect(()=> {
     // izinsiz girişleri engelliyoruz
@@ -50,21 +55,50 @@ const RandevuPage = ({setStateUser}) => {
   }
   const handleSubmit = async (e)=> {
     e.preventDefault()
+
+    const currentTime = new Date().getTime();
+    let randevuDate;
+   
+    if(localStorage.getItem('randevuAlper')) {
+       randevuDate = new Date(localStorage.getItem('randevuAlper')).getTime();
+    }
+
+    if(currentTime<randevuDate){
+      toast.info('İleri bir tarihe alınmış randevunuz zaten bulunmaktadır')
+      return;
+    }
+
     await addDoc(randevularRef, {
       treatment:formData.treatment,
       date:formData.date,
+      phone:formData.phone,
       user:{
         name:formData.name,
         uid:auth.currentUser.uid
       }
-  }).then(()=> toast.success('Kaydınız Alınmıştır'))
+  }).then(()=> {
+    toast.success('Kaydınız Alınmıştır')
+    navigate('/')
+    localStorage.setItem('randevuAlper',formData.date)
+  })
 
   }
-  // useEffect(()=>{
-  //   console.log(formData)
-  // },[formData])
+  
 
  const randevularRef =collection(db,'randevular')
+ useEffect(()=> {
+    onSnapshot(randevularRef,(snapShot)=> {
+      const randevuList = [];
+      snapShot.docs.forEach((doc)=>{
+        if(doc.data().user.uid == auth.currentUser.uid){
+          randevuList.push(doc.data())
+        }
+      })
+      setTreatmentList(randevuList)
+     
+    })
+
+ },[])
   return (
     <main className='randevu'>
 
@@ -82,23 +116,34 @@ const RandevuPage = ({setStateUser}) => {
           </div>
           <div className="right">
             <p>Randevu Formu</p>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div>
-              <Select   onChange={(e)=> setFormData({...formData, ['treatment']:e.value})} className='input' placeholder='Tedavi Türü Seçin' required options={options} />
-              <input name='phone' onChange={handleChange} className='input' type="text" placeholder='Telefon' required />
+              <Select  onChange={(e)=> {setFormData({...formData, ['treatment']:e.label})
+            
+            }} className='input' placeholder='Tedavi Türü Seçin' required options={options} />
+              <input  name='phone' onChange={handleChange} className='input' type="text" placeholder='Telefon' required />
               </div>
               <div>
-                <input name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
-                <input name='date' onChange={handleChange} className='input' type="date" required/>
+                <input  name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
+                <input  name='date' onChange={handleChange} className='input' type="date" required/>
               
               </div>
-              <button onClick={handleSubmit} type='submit'  className='button'>Gönder</button>
+              <button type='submit'  className='button'>Gönder</button>
             </form>
            
           </div>
           </div>
         
         </div>
+
+        <h3>Randevularım</h3>
+
+        {
+          treatmentList.map((item,index)=> (
+            <TreatmentItem key={index} treat = {item} />
+          ))
+        }
+
     </main>
   )
 }
