@@ -64,7 +64,8 @@ const TreatmentItem = ({treat}) => {
       <div className='left'>
         <p>{treat.user.name}</p>
         <p>{treat.treatment}</p>
-        <p>{formatDate(treat.date)}</p>
+        <p>{formatDate(treat.date)} , saat: {treat.hour} </p>
+        
       </div>
       <div className='right'>
         {!isPassed ?

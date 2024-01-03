@@ -846,6 +846,12 @@ footer {
             flex-direction: column;
             gap: 10px;
 
+            .resetPassword {
+                cursor: pointer;
+                color: rgb(163, 19, 19);
+                width: 150px;
+               font-size: 12px;
+            }
             div {
                 display: flex;
                 flex-direction: column;
@@ -886,6 +892,40 @@ footer {
                 font-size: 14px;
                 text-decoration: underline;
             }
+        }
+    }
+    .modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        padding:  30px;
+        background-color: white;
+        border-radius: 10px;
+        width: 30%;
+        box-shadow: 0 0 10px black;
+        min-width: 300px;
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+            input {
+                padding: 10px;
+                width: 100%;
+                border-radius: 8px;
+    
+            }
+        }
+       
+        .icon-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 30px;
+            cursor: pointer;
         }
     }
 }

@@ -7,25 +7,16 @@ import { signOut } from '@firebase/auth'
 import {addDoc, collection} from 'firebase/firestore'
 import { doc, onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
+import { optionsHour, optionsTreatment } from '../constants'
 
 const RandevuPage = ({setStateUser}) => {
-  const options = [
-    { value: 'implant', label: 'İmplant' },
-    { value: 'gülüs-tasarimi', label: 'Gülüş Tasarımı' },
-    { value: 'kanal-tedavisi', label: 'Kanal Tedavisi' },
-    { value: 'beyazlatma', label: 'Beyazlatma' },
-    { value: 'protez-cesitleri', label: 'Protez Çeşitleri' },
-    { value: 'zirkonyum-kaplama', label: 'Zirkonyum Kaplama' },
-    { value: 'yaprak-porselen', label: 'Yaprak Porselen' },
-    { value: 'dolgu', label: 'Dolgu' },
-    { value: 'dis-eti-hastaliklari', label: 'Diş Eti Hastalıkları' },
-    { value: 'cocuk-dis', label: 'Çocuk diş Hekimliği' },
-  ]
+ 
   const [formData, setFormData] = useState({
     treatment:'',
     phone:'',
     name:'',
     date:'',
+    hour:'',
     isChecked:false
   })
 
@@ -70,6 +61,7 @@ const RandevuPage = ({setStateUser}) => {
       treatment:formData.treatment,
       date:formData.date,
       phone:formData.phone,
+      hour:formData.hour,
       isChecked:formData.isChecked,
       user:{
         name:formData.name,
@@ -82,6 +74,7 @@ const RandevuPage = ({setStateUser}) => {
     e.target[1].value=''
     e.target[2].value=''
     e.target[3].value=''
+    e.target[4].value=''
   })
 
   }
@@ -125,13 +118,15 @@ const RandevuPage = ({setStateUser}) => {
               <div>
               <Select  onChange={(e)=> {setFormData({...formData, ['treatment']:e.label})
             
-            }} className='input' placeholder='Tedavi Türü Seçin' required options={options} />
+            }} className='input' placeholder='Tedavi Türü Seçin' required options={optionsTreatment} />
               <input  name='phone' onChange={handleChange} className='input' type="text" placeholder='Telefon' required />
               </div>
               <div>
                 <input  name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
-              
+
+                <Select  onChange={(e)=> {setFormData({...formData, ['hour']:e.label})
+                 }} className='input' placeholder='Saat Seçin' required options={optionsHour} />
               </div>
               <button type='submit'  className='button'>Gönder</button>
             </form>
