@@ -905,6 +905,20 @@ footer {
        
 
     }
+    .title {
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p {
+            flex: 1;
+            text-align: start;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+    }
 
     .card {
         width: 90%;
@@ -951,6 +965,7 @@ footer {
                 }
                
             }
+
         }
     }
 }
@@ -963,13 +978,64 @@ footer {
     padding: 5px;
     background-color: $color-secondary;
     border-radius: 8px;
-     
-    p{
-        text-align: start;
-        flex: 1;
-        font-weight: bold;
-        color: white;
 
+    .left {
+        display: flex;
+        flex: 1;
+        p{
+            text-align: start;
+            width: 33%;
+            font-weight: bold;
+            color: white;
+    
+        }
+    }
+    .right {
+        display: flex;
+        align-items: center;
+
+        .background {
+            background-color: rgba(128, 102, 102, 0.451);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            margin: 5px;
+            transition: all 0.4s;
+
+            .icon-delete {
+                font-size: 20px;
+                color: white;
+                cursor: pointer;
+                transition: all 0.4s;
+            }
+
+            &:hover {
+                background-color: white;
+
+                .icon-delete {
+                    color: red;
+                }
+            }
+
+        }
+
+       
+    }
+     
+   
+    .checked {
+        padding: 5px;
+        background-color: green;
+        border-radius: 5px;
+        color: white;
+        
+    }
+    .unChecked {
+        padding: 5px;
+        background-color: red;
+        border-radius: 5px;
+        color: white;
     }
 }
 

@@ -44,7 +44,7 @@ const Login = ({setStateUser}) => {
                 setStateUser(res.user.refreshToken)
                 toast.success('Giriş Yapıldı')
                 navigate('/randevu')
-            }).catch(()=> toast.danger('Bir hata oluştu'))
+            }).catch(()=> toast.info('Bir hata oluştu'))
         }else {
             //giriş işlemleri
             signInWithEmailAndPassword(auth, authData.email, authData.password)
@@ -53,7 +53,7 @@ const Login = ({setStateUser}) => {
                 toast.success('Tekrar Hoş Geldiniz')
                 setStateUser(res.user.refreshToken)
                 navigate('/randevu')
-            }).catch(()=> toast.danger('Bir hata oluştu'))
+            }).catch(()=> toast.info('Mail veya şifre hatalı'))
         }
 
     }

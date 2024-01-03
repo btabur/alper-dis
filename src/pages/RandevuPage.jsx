@@ -25,7 +25,8 @@ const RandevuPage = ({setStateUser}) => {
     treatment:'',
     phone:'',
     name:'',
-    date:''
+    date:'',
+    isChecked:false
   })
 
   const [treatmentList,setTreatmentList] = useState([])
@@ -49,50 +50,54 @@ const RandevuPage = ({setStateUser}) => {
   }
   const handleChange = (e)=> {
     setFormData({...formData, [e.target.name]:e.target.value})
-
-   
-
   }
   const handleSubmit = async (e)=> {
     e.preventDefault()
-
+  
+    // yeni randevu almak için ileri bir tarihte randevusu olup olmadığı kontrol ediliyor
     const currentTime = new Date().getTime();
     let randevuDate;
-   
     if(localStorage.getItem('randevuAlper')) {
        randevuDate = new Date(localStorage.getItem('randevuAlper')).getTime();
     }
-
     if(currentTime<randevuDate){
       toast.info('İleri bir tarihe alınmış randevunuz zaten bulunmaktadır')
       return;
     }
 
+    //firebase e randevu ekleniyor
     await addDoc(randevularRef, {
       treatment:formData.treatment,
       date:formData.date,
       phone:formData.phone,
+      isChecked:formData.isChecked,
       user:{
         name:formData.name,
         uid:auth.currentUser.uid
       }
   }).then(()=> {
     toast.success('Kaydınız Alınmıştır')
-    navigate('/')
+    // yerel hafızaya kaydediliyor ki ileri bir tarihe bir den fazla randevu alamasın
     localStorage.setItem('randevuAlper',formData.date)
+    e.target[1].value=''
+    e.target[2].value=''
+    e.target[3].value=''
   })
 
   }
   
 
+  //Verileri Getirme
  const randevularRef =collection(db,'randevular')
  useEffect(()=> {
     onSnapshot(randevularRef,(snapShot)=> {
       const randevuList = [];
       snapShot.docs.forEach((doc)=>{
+        // sadece kullanıcının verilerini alıyoruz
         if(doc.data().user.uid == auth.currentUser.uid){
-          randevuList.push(doc.data())
+          randevuList.push({...doc.data(),id:doc.id}) // içerisine documanın id sini ekliyoruz
         }
+        
       })
       setTreatmentList(randevuList)
      
@@ -137,7 +142,13 @@ const RandevuPage = ({setStateUser}) => {
         </div>
 
         <h3>Randevularım</h3>
-
+        <div className='title'>
+          <p>İsim</p>
+          <p>Tedavi </p>
+          <p>Tarih</p>
+          <p></p>
+        </div>
+            {treatmentList.length == 0 && <p> Herhangi bir randevu kaydınız yoktur</p>}
         {
           treatmentList.map((item,index)=> (
             <TreatmentItem key={index} treat = {item} />
