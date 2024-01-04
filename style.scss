@@ -893,6 +893,18 @@ footer {
                 text-decoration: underline;
             }
         }
+
+        .admin {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+               
+            }
+        }
     }
     .modal {
         position: absolute;
@@ -1076,6 +1088,88 @@ footer {
         background-color: red;
         border-radius: 5px;
         color: white;
+    }
+}
+.adminPage {
+    padding-top: 100px;
+  
+    .modal {
+        width: 100%;
+        height: 100vh;
+        background-color: #0f2650b4;
+       
+        .modal-body {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            padding:  40px 50px;
+            background-color: white;
+            border-radius: 10px;
+            width: 40%;
+            box-shadow: 0 0 10px black;
+            min-width: 400px;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+                input {
+                    width: 100%;
+                    padding: 8px;
+                    font-size: 18px;
+                    border-radius: 8px;
+                }
+            }
+            .remember {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+       
+
+    }
+}
+
+.treatAdminItem {
+    display: flex;
+    justify-content: space-around;
+    background-color: $color-secondary;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    p {
+       width: 220px;
+        text-align: start;
+    }
+    .unChecked {
+        padding: 10px 20px;
+        background-color: $color-primary;
+        color: white;
+        cursor: pointer;
+        transition: all 0.4s;
+        &:hover {
+            background-color: green;
+
+        }
+
+    }
+    .checked {
+        padding: 10px 20px;
+        background-color: $color-primary;
+        color: white;
+        cursor: pointer;
+        transition: all 0.4s;
+        &:hover {
+            background-color: green;
+
+        }
+
     }
 }
 
@@ -1325,7 +1419,7 @@ footer {
 }
 
 //telefon
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 680px) {
     button {
         width: 100px;
         padding: 5px 10px;
@@ -1629,6 +1723,38 @@ footer {
         .card {
             left: 20px;
         }
+    }
+    .randevu {
+        .btn-logout {
+                top: 75px;
+                padding: 5px ;
+                width: 120px;
+                font-size: 14px;
+            }
+            .card {
+                .body {
+                    flex-direction: column;
+                   .right {
+                    margin-top: 10px;
+                    form {
+                        width: 450px;
+                        div {
+                            flex-direction: column;
+                            gap: 20px !important;
+                            .input {
+                                width: 100%;
+                            }
+                        }
+                    }
+                   }
+                   
+                }
+              
+            }
+    }
+    .treatment-item {
+        width: 98%;
+        font-size: 14px;
     }
 
 }

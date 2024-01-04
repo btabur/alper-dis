@@ -47,12 +47,15 @@ const RandevuPage = ({setStateUser}) => {
   
     // yeni randevu almak için ileri bir tarihte randevusu olup olmadığı kontrol ediliyor
     const currentTime = new Date().getTime();
-    let randevuDate;
-    if(localStorage.getItem('randevuAlper')) {
-       randevuDate = new Date(localStorage.getItem('randevuAlper')).getTime();
-    }
-    if(currentTime<randevuDate){
+
+    if(currentTime<getLastAppointment()){
       toast.info('İleri bir tarihe alınmış randevunuz zaten bulunmaktadır')
+      return;
+    }
+    //geçmiş bir tarihe randevu almayı engeller
+    const appointmentDate= new Date(formData.date)
+    if(currentTime> appointmentDate) {
+      toast.info('Geçmiş tarihe randevu alamazsınız')
       return;
     }
 
@@ -69,8 +72,7 @@ const RandevuPage = ({setStateUser}) => {
       }
   }).then(()=> {
     toast.success('Kaydınız Alınmıştır')
-    // yerel hafızaya kaydediliyor ki ileri bir tarihe bir den fazla randevu alamasın
-    localStorage.setItem('randevuAlper',formData.date)
+    e.target[0].value=''
     e.target[1].value=''
     e.target[2].value=''
     e.target[3].value=''
@@ -78,11 +80,22 @@ const RandevuPage = ({setStateUser}) => {
   })
 
   }
+
+  const getLastAppointment =( )=> {
+
+   const dateList = treatmentList.map((item)=> new Date(item.date).getTime())
+      const orderedList = dateList.sort((a, b)=> b-a)
+
+   return orderedList[0]
+
+  }
+  
+ //Verileri Getirme
+ const randevularRef = collection(db,'randevular')
+ 
+ useEffect( ()=> {
   
 
-  //Verileri Getirme
- const randevularRef =collection(db,'randevular')
- useEffect(()=> {
     onSnapshot(randevularRef,(snapShot)=> {
       const randevuList = [];
       snapShot.docs.forEach((doc)=>{
@@ -96,7 +109,7 @@ const RandevuPage = ({setStateUser}) => {
      
     })
 
- },[])
+ },[formData])
   return (
     <main className='randevu'>
 
@@ -116,17 +129,25 @@ const RandevuPage = ({setStateUser}) => {
             <p>Randevu Formu</p>
             <form onSubmit={handleSubmit}>
               <div>
-              <Select  onChange={(e)=> {setFormData({...formData, ['treatment']:e.label})
-            
-            }} className='input' placeholder='Tedavi Türü Seçin' required options={optionsTreatment} />
+
+                <select onChange={handleChange} className='input' name="treatment" required>
+                  <option value="" disabled>Tedavi Türü Seçin</option>
+                  {optionsTreatment.map((item)=> (
+                      <option value={item.value}>{item.label}</option>
+                  ))}
+                </select>
               <input  name='phone' onChange={handleChange} className='input' type="text" placeholder='Telefon' required />
               </div>
               <div>
                 <input  name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
 
-                <Select  onChange={(e)=> {setFormData({...formData, ['hour']:e.label})
-                 }} className='input' placeholder='Saat Seçin' required options={optionsHour} />
+                <select onChange={handleChange} className='input' name="hour" required>
+                <option value="" disabled>Saati Seçin</option>
+                  {optionsHour.map((item)=> (
+                      <option value={item.value}>{item.label}</option>
+                  ))}
+                </select>
               </div>
               <button type='submit'  className='button'>Gönder</button>
             </form>

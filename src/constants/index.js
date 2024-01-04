@@ -1,14 +1,14 @@
 export const optionsTreatment = [
-    { value: 'implant', label: 'İmplant' },
-    { value: 'gülüs-tasarimi', label: 'Gülüş Tasarımı' },
-    { value: 'kanal-tedavisi', label: 'Kanal Tedavisi' },
-    { value: 'beyazlatma', label: 'Beyazlatma' },
-    { value: 'protez-cesitleri', label: 'Protez Çeşitleri' },
-    { value: 'zirkonyum-kaplama', label: 'Zirkonyum Kaplama' },
-    { value: 'yaprak-porselen', label: 'Yaprak Porselen' },
-    { value: 'dolgu', label: 'Dolgu' },
-    { value: 'dis-eti-hastaliklari', label: 'Diş Eti Hastalıkları' },
-    { value: 'cocuk-dis', label: 'Çocuk diş Hekimliği' },
+    { value: 'İmplant', label: 'İmplant' },
+    { value: 'Gülüs Tasarimi', label: 'Gülüş Tasarımı' },
+    { value: 'Kanal Tedavisi', label: 'Kanal Tedavisi' },
+    { value: 'Beyazlatma', label: 'Beyazlatma' },
+    { value: 'Protez Çesitleri', label: 'Protez Çeşitleri' },
+    { value: 'Zirkonyum Kaplama', label: 'Zirkonyum Kaplama' },
+    { value: 'Yaprak Porselen', label: 'Yaprak Porselen' },
+    { value: 'Dolgu', label: 'Dolgu' },
+    { value: 'Dis Eti Hastaliklari', label: 'Diş Eti Hastalıkları' },
+    { value: 'Çocuk Dis', label: 'Çocuk diş Hekimliği' },
   ]
 
   export const optionsHour = [
@@ -34,3 +34,26 @@ export const optionsTreatment = [
     {value: '18:00', label:'18:00'},
     {value: '18:30', label:'18:30'},
   ]
+
+
+   //tarihi istediğimiz formata çeviriyoruz
+ export function formatDate(inputDate) {
+    // Verilen tarihi Date objesine çevir
+    const dateObject = new Date(inputDate);
+  
+    // Tarih değerini kontrol et
+    if (isNaN(dateObject.getTime())) {
+      // Hatalı bir tarih girildiyse
+      return "Geçersiz Tarih";
+    } else {
+      // Tarihi belirli bir formatta biçimlendir
+      const formattedDate =
+        ("0" + dateObject.getDate()).slice(-2) +
+        "/" +
+        ("0" + (dateObject.getMonth() + 1)).slice(-2) +
+        "/" +
+        dateObject.getFullYear();
+  
+      return formattedDate;
+    }
+  }

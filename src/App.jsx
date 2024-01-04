@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import RandevuPage from './pages/RandevuPage'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminPage from './pages/AdminPage'
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/services' element={<ServicesPage/>}/>
         <Route path='/login' element={<Login setStateUser={setStateUser}/>}/>
         <Route path='/randevu' element = {<RandevuPage setStateUser={setStateUser}/>}/>
+        <Route path='/admin' element={<AdminPage/>} />
         </Routes>
         <WhatsApp/>
         <Footer/>

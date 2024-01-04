@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { db } from '../firebase/config';
 import { doc, deleteDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
+import { formatDate } from '../constants';
 
 const TreatmentItem = ({treat}) => {
 
@@ -37,34 +38,14 @@ const TreatmentItem = ({treat}) => {
   },[treat])
 
 
-  function formatDate(inputDate) {
-    // Verilen tarihi Date objesine çevir
-    const dateObject = new Date(inputDate);
-  
-    // Tarih değerini kontrol et
-    if (isNaN(dateObject.getTime())) {
-      // Hatalı bir tarih girildiyse
-      return "Geçersiz Tarih";
-    } else {
-      // Tarihi belirli bir formatta biçimlendir
-      const formattedDate =
-        ("0" + dateObject.getDate()).slice(-2) +
-        "/" +
-        ("0" + (dateObject.getMonth() + 1)).slice(-2) +
-        "/" +
-        dateObject.getFullYear();
-  
-      return formattedDate;
-    }
-  }
-
+ 
 
   return (
     <main className='treatment-item'>
       <div className='left'>
         <p>{treat.user.name}</p>
         <p>{treat.treatment}</p>
-        <p>{formatDate(treat.date)} , saat: {treat.hour} </p>
+        <p>{formatDate(treat.date)} , {treat.hour} </p>
         
       </div>
       <div className='right'>
@@ -75,9 +56,10 @@ const TreatmentItem = ({treat}) => {
         : 
          <p>Geçmiş Randevu</p>
         }
+        {!isPassed &&
          <div className='background'>
          <MdDelete onClick={delDoc} className='icon-delete' />
-         </div>
+         </div>}
       </div>
        
       

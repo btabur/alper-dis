@@ -32,16 +32,16 @@ const Header = ({stateUser}) => {
         </div>
         <nav>
             <ul className={showMenu ? 'show' : ''}>
-                <li>
+                <li onClick={()=> setShowMenu(false)}>
                     <NavLink to={'/'}>AnaSayfa</NavLink>
                 </li>
-                <li>
+                <li onClick={()=> setShowMenu(false)}>
                 <NavLink to={'/services'}>Hizmetlerimiz</NavLink>
                 </li>
-                <li>
+                <li onClick={()=> setShowMenu(false)}>
                 <NavLink>Hekimlerimiz</NavLink>
                 </li>
-                <li>
+                <li onClick={()=> setShowMenu(false)}>
                 <NavLink>İletişim</NavLink>
                 </li>
                 <li>

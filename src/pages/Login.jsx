@@ -136,10 +136,8 @@ const Login = ({setStateUser}) => {
              <p>Hesabınız Var mı? <span onClick={()=> setIsLogin(false)}>Giriş Yap</span></p> :
 
              <p>Hesabınız Yok Mu? <span onClick={()=> setIsLogin(true)}>Kayıt Ol</span></p> 
-
-            
             }
-          
+            <p onClick={()=> navigate('/admin')} className="admin"> Admin Girişi</p>
 
         </article>
 
