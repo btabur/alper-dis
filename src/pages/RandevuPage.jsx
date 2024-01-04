@@ -21,6 +21,8 @@ const RandevuPage = ({setStateUser}) => {
   })
 
   const [treatmentList,setTreatmentList] = useState([])
+  const [allTreat,setAllTreat] = useState([])
+  const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
 
   const navigate = useNavigate()
   useEffect(()=> {
@@ -41,7 +43,9 @@ const RandevuPage = ({setStateUser}) => {
   }
   const handleChange = (e)=> {
     setFormData({...formData, [e.target.name]:e.target.value})
-  }
+    if(e.target.name == 'date'){
+      checkHourOptions(e.target.value)
+  }  }
   const handleSubmit = async (e)=> {
     e.preventDefault()
   
@@ -98,18 +102,52 @@ const RandevuPage = ({setStateUser}) => {
 
     onSnapshot(randevularRef,(snapShot)=> {
       const randevuList = [];
+      const allrandevu = []
       snapShot.docs.forEach((doc)=>{
         // sadece kullanıcının verilerini alıyoruz
-        if(doc.data().user.uid == auth.currentUser.uid){
-          randevuList.push({...doc.data(),id:doc.id}) // içerisine documanın id sini ekliyoruz
+        if (doc.data().user && doc.data().user.uid && doc.data().user.uid == auth.currentUser.uid) {
+          randevuList.push({ ...doc.data(), id: doc.id });
         }
+        allrandevu.push(doc.data())
         
       })
       setTreatmentList(randevuList)
+      //tüm randevuları alıyoruz
+      setAllTreat(allrandevu)
      
     })
 
  },[formData])
+
+
+ const checkHourOptions = (date) => {
+
+      // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
+
+      const currentDay= new Date()
+      const treatDay= new Date(date)
+
+
+      if(currentDay>treatDay) {
+
+        toast.info('Geçmiş güne randevu alamazsınız')
+        return;
+      }
+      //girilen günün randevularının alıyoruz
+      const dayTreats = allTreat.filter((item)=> item.date == date && item )
+      //options nesnesini çağırdık
+
+
+     
+      let filteredOptions = optionsHour
+      // girilen gündeki randevu saatlerini options dan çıkartıyoruz
+      dayTreats.forEach((treat)=> {
+        filteredOptions = filteredOptions.filter((i)=> i.value !== treat.hour  &&  i)
+      })
+
+      setoptionsFilteredHour(filteredOptions)
+
+ }
   return (
     <main className='randevu'>
 
@@ -141,15 +179,19 @@ const RandevuPage = ({setStateUser}) => {
               <div>
                 <input  name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
-
+                  
+                  {/* saat */}
                 <select onChange={handleChange} className='input' name="hour" required>
                 <option value="" disabled>Saati Seçin</option>
-                  {optionsHour.map((item)=> (
+                  {optionsFilteredHour.map((item)=> (
                       <option value={item.value}>{item.label}</option>
                   ))}
                 </select>
               </div>
+              <div>
               <button type='submit'  className='button'>Gönder</button>
+              <span>Önce günü Seçin boş saatler otamatik yüklenecektir</span>
+              </div>
             </form>
            
           </div>
