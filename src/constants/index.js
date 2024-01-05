@@ -57,3 +57,19 @@ export const optionsTreatment = [
       return formattedDate;
     }
   }
+
+
+  //bu günün tarihini istenen formatta döndürür
+ export const getCurentDay= ()=> {
+    const day = new Date();
+
+    // Yıl, ay ve gün bilgilerini al
+    const year = day.getFullYear();
+    const month = String(day.getMonth() + 1).padStart(2, '0'); // Ay 0-11 arasında olduğu için +1 eklenir
+    const date = String(day.getDate()).padStart(2, '0');
+    
+    // YYYY-MM-DD formatında string'i oluştur
+    const formattedDate = `${year}-${month}-${date}`;
+
+    return formattedDate;
+  }

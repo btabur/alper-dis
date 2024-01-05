@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { formatDate } from '../constants'
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { toast } from 'react-toastify';
 
 const TreatAdminItem = ({treat}) => {
     const [isPassed,setIsPassed] = useState(false);
+    const [newTreat,setNewTreat] = useState(treat);
+    const [isCheck,setIsCheck]=useState()
 
     useEffect(()=> {
         const currentTime = new Date();
@@ -13,12 +18,28 @@ const TreatAdminItem = ({treat}) => {
         }else {
             setIsPassed(false)
         }
+        setIsCheck(treat.isChecked)
+       
+        
 
      
 
     },[])
 
-    const handleChecked = ()=> {
+    const handleChecked =async ()=> {
+      const docRef = doc(db, 'randevular', treat.id);
+  
+      await  updateDoc (docRef,{
+        
+        ...treat, isChecked:!isCheck
+      }).then(()=>{
+        setNewTreat({...treat,isChecked:!treat.isChecked})
+        setIsCheck(!isCheck)
+        isCheck.isChecked ? toast.success('Randevu onaylandı') :
+        toast.info('Randevu onayı geri alındı')
+      
+      })
+      
         
     }
   return (
@@ -30,8 +51,14 @@ const TreatAdminItem = ({treat}) => {
 
       {isPassed ? 
       <span>Geçmiş Randevu</span> : 
-      <button onClick={handleChecked} className={formatDate.isChecked ? 'checked' : 'unChecked'} >
-        {formatDate.isChecked ? 'Onaylandı': 'Onayla'}</button>}
+      <div>
+          <button onClick={handleChecked} className={newTreat.isChecked ? ' btn checked' : ' btn unChecked'} >
+          {newTreat.isChecked ? 'Onaylandı': 'Onayla'}</button>
+          <button className='btn delete-treat'>Reddet</button>
+      </div>
+      }
+    
+     
 
       
     </section>
