@@ -109,6 +109,13 @@ const AdminPage = () => {
         setFilteredTreats(filteredList)
   }
 
+  const resetFilter =()=> {
+    nameRef.current.value=''
+    dateRef.current.value=''
+    getTodayTreatment()
+
+  }
+
 
   return (
     <main className="adminPage">
@@ -121,13 +128,15 @@ const AdminPage = () => {
             <article className="filter-body">
                 <input ref={nameRef} onChange={filterNameAndDate} type="text" placeholder="hasta ismi girin" />
                 <input ref={dateRef} onChange={filterNameAndDate}  type="date"/>
+                <button onClick={resetFilter} className="button">Sıfırla</button>
             </article>
           
         </section>
-
-        {filteredTreats?.map((treat) => (
-            <TreatAdminItem key={treat.id} treat={treat} />
-        ))}
+        <article className="admin-item-container" >
+            {filteredTreats?.map((treat) => (
+                  <TreatAdminItem key={treat.id}  treat={treat} /> 
+            ))}
+        </article>
 
         {filteredTreats.length==0 && <p style={{textAlign:'center', margin:'100px'}}>Bu güne ait bir randevu bulunamadı</p> }
 

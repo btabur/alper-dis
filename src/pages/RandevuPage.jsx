@@ -63,6 +63,8 @@ const RandevuPage = ({setStateUser}) => {
       return;
     }
 
+    
+
     //firebase e randevu ekleniyor
     await addDoc(randevularRef, {
       treatment:formData.treatment,
