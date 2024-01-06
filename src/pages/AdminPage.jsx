@@ -46,19 +46,19 @@ const AdminPage = () => {
        
       })
 
-      getTodayTreatment();
-      console.log(treatmentList)
-
-   
-    
+      
 
   }, []);
+  useEffect(()=> {
+    getTodayTreatment();
+  },[treatmentList])
 
   //bu günün randevularını döndürür
   const getTodayTreatment = ()=> {
     const today= getCurentDay()
    
-    const filteredList= treatmentList.filter((treat)=> treat.date == today);
+  
+    const filteredList=  treatmentList.filter((treat)=> treat.date == today);
 
     setFilteredTreats(filteredList)
   }
@@ -83,15 +83,7 @@ const AdminPage = () => {
   }
 
 
-  // const filterName = (e)=> {
-  //     const filteredList = treatmentList.filter((treat)=> treat.user.name.toLowerCase().includes(e.target.value.toLowerCase()))
-  //     setFilteredTreats(filteredList)
-  // }
-  
-  // const filterDate = (e) => {
-  //   const filteredList = treatmentList.filter((treat)=> treat.date == e.target.value)
-  //     setFilteredTreats(filteredList)
-  // }
+
 
 
   const filterNameAndDate = ()=> {

@@ -73,3 +73,32 @@ export const optionsTreatment = [
 
     return formattedDate;
   }
+
+ export function compareDates(date1, date2) {
+    const currentDate = new Date();
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+  
+    // İki tarih de aynı gün mü kontrol et
+    const isSameDay = d1.getDate() === d2.getDate() && d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear();
+  
+    // Tarihlerin geçmiş veya gelecek olduğunu belirle
+    if (isSameDay) {
+      return 0;
+    } else if (d1 < currentDate && d2 < currentDate) {
+      return -1;
+    } else {
+      return  1;
+    }
+  }
+
+
+    // const filterName = (e)=> {
+  //     const filteredList = treatmentList.filter((treat)=> treat.user.name.toLowerCase().includes(e.target.value.toLowerCase()))
+  //     setFilteredTreats(filteredList)
+  // }
+  
+  // const filterDate = (e) => {
+  //   const filteredList = treatmentList.filter((treat)=> treat.date == e.target.value)
+  //     setFilteredTreats(filteredList)
+  // }

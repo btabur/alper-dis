@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { formatDate } from '../constants'
+import { compareDates, formatDate, getCurentDay } from '../constants'
 import { doc, updateDoc,getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { toast } from 'react-toastify';
 
 const TreatAdminItem = ({treat}) => {
-    const [isPassed,setIsPassed] = useState(false);
+    const [isPassed,setIsPassed] = useState();
     const [newTreat,setNewTreat] = useState(treat);
 
     useEffect(()=> {
-        const currentTime = new Date();
-        const dateTime = new Date(treat.date);
+       
+        const isPass = compareDates(getCurentDay(),treat.date)
 
-        if(dateTime<currentTime) {
-            setIsPassed(true);
-        }else {
-            setIsPassed(false)
-        }
+        setIsPassed(isPass)
+
+       
     
     },[])
 
@@ -49,7 +47,7 @@ const TreatAdminItem = ({treat}) => {
        <p>{treat.treatment}</p>
        <p>{formatDate(treat.date)} , {treat.hour} </p>
 
-      {isPassed ? 
+      {isPassed== -1 ? 
       <span>Geçmiş Randevu</span> : 
       <div>
           <button onClick={handleChecked} className={newTreat.isChecked ? ' btn checked' : ' btn unChecked'} >

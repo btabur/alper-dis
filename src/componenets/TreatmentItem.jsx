@@ -8,7 +8,7 @@ import { formatDate } from '../constants';
 
 const TreatmentItem = ({treat}) => {
 
-  const [isPassed,setIsPassed] = useState(false)
+  const [isPassed,setIsPassed] = useState()
 
   //randevuyu silme işlemi
   const delDoc = () => {
@@ -23,13 +23,10 @@ const TreatmentItem = ({treat}) => {
   }
   useEffect(()=> {
 
-    // randevunun tarihine göre geçip geçmediğine karar veriliyor
-    const currentTime = new Date().getTime();
-    const randevuDate= new Date(treat.date).getTime();
-    if(currentTime > randevuDate) {
-      setIsPassed(true)
-    }
 
+    const isPass = compareDates(getCurentDay(),treat.date)
+
+    setIsPassed(isPass)
 
 
 
