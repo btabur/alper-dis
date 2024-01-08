@@ -1262,6 +1262,46 @@ footer {
     }
 }
 
+.randevu-add {
+    position: absolute;
+    top: 150px;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: $color-primary;
+    padding: 20px 50px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px solid black;
+    .icon-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 25px;
+        cursor: pointer;
+
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        div {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            .input {
+                color: black;
+                height: 40px;
+                border-radius: 8px;
+                padding: 3px;
+            }
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+}
 
 //tablet
 @media only screen and (max-width: 800px) { 

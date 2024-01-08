@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import React, { useState } from 'react'
+import { createUserWithEmailAndPassword,updateProfile, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import React, { useEffect, useState } from 'react'
 import { auth, db, provider } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -22,6 +22,9 @@ const Login = ({setStateUser}) => {
 
     const navigate = useNavigate()
 
+      //Verileri Getirme
+    const UsersRef = collection(db,'Users')
+
     const handleInput = (e) => {
         setAuthData({...authData, [e.target.name]:e.target.value})
     }
@@ -40,15 +43,10 @@ const Login = ({setStateUser}) => {
     //email ile giriş için
     const saveAuthWithEmail =async ()=> {
 
-        if(isLogin) {
+        if(isLogin) {   
+
+            LoginInWithEmail(authData.email, authData.password, authData.name);
             //kayıt işlemleri
-            createUserWithEmailAndPassword(auth, authData.email, authData.password)
-            .then((res)=> {
-                localStorage.setItem('UserAlper',res.user.refreshToken)
-                setStateUser(res.user.refreshToken)
-                navigate('/randevu')
-               toast.success('Giriş Yapıldı')
-            }).catch(()=> toast.info('Bir hata oluştu'))
         }else {
             //giriş işlemleri
             signInWithEmailAndPassword(auth, authData.email, authData.password)
@@ -73,33 +71,35 @@ const Login = ({setStateUser}) => {
         })
     }
 
-    // const saveUserFirebaseFromEmail = async () => {
+    const LoginInWithEmail = async (email, password, displayName) => {
+        try {
+          // E-posta ve şifre ile giriş yap
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+          // Kullanıcının displayName özelliğini güncelle sadece yeni kayıt olmuşsa
+          
+            await updateProfile(userCredential.user, { displayName });
 
-    //     const usersRef = collection(db,'Users');
+            //kullanıcıyı fireStore a kaydediyoruz
+            await addDoc(UsersRef, {
+                name:displayName,
+                id:auth.currentUser.uid
+             })
+      
+          localStorage.setItem('UserAlper', userCredential.user.refreshToken);
+          navigate('/randevu');
+          setStateUser(userCredential.user.refreshToken);
+          toast.success('Giriş Yapıldı');
+      
+          console.log('Kullanıcı giriş yaptı ve displayName ayarlandı:', userCredential.user);
+        } catch (error) {
+          console.error('Giriş hatası:', error.message);
+          toast.info('Bir hata oluştu', error);
+        }
+      };
+    
 
-    //     await addDoc(usersRef,{
-    //         name:authData.name,
-    //         email:authData.email,
-    //         password:authData.password
-    //     }).then(()=> {
-    //         toast.success('Giriş Yapıldı')
-    //     }).catch(()=> toast.info('Bir hata oluştu'))
-
-
-    // }
-    // const saveUserFirebaseFromGoogle = async () => {
-
-    //     const usersRef = collection(db,'Users');
-
-    //     await addDoc(usersRef,{
-    //         name:auth.currentUser.displayName,
-    //         email:auth.currentUser.email,
-    //     }).then(()=> {
-    //         toast.success('Giriş Yapıldı')
-    //     }).catch(()=> toast.info('Bir hata oluştu'))
-
-
-    // }
+    
 
   return (
     <main className='login-page'>

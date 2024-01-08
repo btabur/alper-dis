@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Select from 'react-select'
 import { auth,db } from '../firebase/config'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -14,6 +13,9 @@ const RandevuPage = ({setStateUser}) => {
   const [treatmentList,setTreatmentList] = useState([])
   const [allTreat,setAllTreat] = useState([])
   const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
+
+  //Verileri Getirme
+  const randevularRef = collection(db,'randevular')
 
   const navigate = useNavigate()
 
@@ -60,7 +62,7 @@ const RandevuPage = ({setStateUser}) => {
 
 
     //geçmiş bir tarihe randevu almayı engeller
-    const isDayPassed = compareDates(getCurentDay(),formatDate.date)
+    const isDayPassed = compareDates(getCurentDay(),e.target[3].value)
     if(isDayPassed==-1) {
       toast.info('Geçmiş güne randevu alamazsınız')
         return;
@@ -104,24 +106,24 @@ const RandevuPage = ({setStateUser}) => {
  
   }
   
- //Verileri Getirme
- const randevularRef = collection(db,'randevular')
+
  
  useEffect( ()=> {
-  
-
+     
     onSnapshot(randevularRef,(snapShot)=> {
       const randevuList = [];
       const allrandevu = []
+
       snapShot.docs.forEach((doc)=>{
         // sadece kullanıcının verilerini alıyoruz
-        if (doc.data().user && doc.data().user.uid && doc.data().user.uid == auth.currentUser.uid) {
+        if (doc.data().user && doc.data().user.uid && doc.data().user.uid == auth.currentUser.uid ) {
+
           randevuList.push({ ...doc.data(), id: doc.id });
         }
         allrandevu.push(doc.data())
         
       })
-      setTreatmentList(randevuList)
+      setTreatmentList(randevuList.reverse())
       //tüm randevuları alıyoruz
       setAllTreat(allrandevu)
      
@@ -132,30 +134,23 @@ const RandevuPage = ({setStateUser}) => {
 
  const checkHourOptions = (date) => {
 
-      // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
+     
 
-      // const currentDay= new Date()
-      // const treatDay= new Date(date)
-
-
-      // if(currentDay>treatDay) {
-
-      //   toast.info('Geçmiş güne randevu alamazsınız')
-      //   return;
-      // }
-
+ // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
     const isDayPassed = compareDates(getCurentDay(),date)
+    let filteredOptions = []
+
     if(isDayPassed==-1) {
       toast.info('Geçmiş güne randevu alamazsınız')
+      setoptionsFilteredHour(filteredOptions)
         return;
     }
       //girilen günün randevularının alıyoruz
       const dayTreats = allTreat.filter((item)=> item.date == date && item )
+      
+      
       //options nesnesini çağırdık
-
-
-     
-      let filteredOptions = optionsHour
+       filteredOptions =optionsHour
       // girilen gündeki randevu saatlerini options dan çıkartıyoruz
       dayTreats.forEach((treat)=> {
         filteredOptions = filteredOptions.filter((i)=> i.value !== treat.hour  &&  i)

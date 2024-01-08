@@ -6,6 +6,7 @@ import { getCurentDay } from "../constants";
 import { FaCirclePlus } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import RandevuCard from "../componenets/RandevuCard";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -14,28 +15,36 @@ const AdminPage = () => {
 
   const [admins, setAdmins] = useState([]);
   const [isShow,setIsShow] = useState(false);
+  const [adminId,setAdminId] =useState();
   const [isRemember,setIsRemember] = useState(false)
   const [treatmentList,setTreatmentList] = useState([])
   const [filteredTreats,setFilteredTreats] = useState([])
+  const [isShowAddTreatModal,setIsShowAddTreatModal] = useState(false)
   const nameRef = useRef();
   const dateRef = useRef();
   const navigate = useNavigate()
 
 
   useEffect(() => {
-    //admin verilerini alıyoruz
-    const adminList = [];
-    onSnapshot(adminRef, (snapShot) => {
-      snapShot.docs.forEach((doc) => {
-        adminList.push(doc.data());
-      });
 
-      setAdmins(adminList);
-    });
-    // beni hatırla aktif ise şifre modal ı gösterme
-    if(localStorage.getItem('alperAdminRemember')) {
-       setIsShow(true)
+   
+        //admin verilerini alıyoruz
+        const adminList = [];
+
+        onSnapshot(adminRef, (snapShot) => {
+          snapShot.docs.forEach((doc) => {
+            adminList.push({...doc.data(),id:doc.id});
+          });
+
+          setAdmins(adminList);
+        });
+       
+   
+     // beni hatırla aktif ise şifre modal ı gösterme
+     if(localStorage.getItem('alperAdminRemember')) {
+      setIsShow(true)
     }
+    
 
     //randevu verileri
     onSnapshot(randevularRef,(snapShot)=> {
@@ -50,12 +59,14 @@ const AdminPage = () => {
        
       })
 
+
+     
+
       
 
   }, []);
-  useEffect(()=> {
-    getTodayTreatment();
-  },[])
+
+  
 
   //bu günün randevularını döndürür
   const getTodayTreatment = ()=> {
@@ -77,6 +88,7 @@ const AdminPage = () => {
     admins.map((item)=> {
         if(item.name == e.target[0].value && item.password== e.target[1].value ) {
             setIsShow(true)
+           localStorage.setItem('alperAdminId',item.id)
             if(isRemember) {
                 localStorage.setItem('alperAdminRemember',isRemember)
             }
@@ -134,7 +146,7 @@ const AdminPage = () => {
                 <input ref={nameRef} onChange={filterNameAndDate} type="text" placeholder="hasta ismi girin" />
                 <input ref={dateRef} onChange={filterNameAndDate}  type="date"/>
                 <button onClick={resetFilter} className="button">Sıfırla</button>
-                <FaCirclePlus className="icon-add" />
+                <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />
             </article>
           
         </section>
@@ -165,6 +177,13 @@ const AdminPage = () => {
             </div>
             </div>   
         </div>}
+
+        {/*  randevu ekleme modal */}
+        {isShowAddTreatModal &&
+        
+          <RandevuCard setIsShowAddTreatModal={setIsShowAddTreatModal} />
+        
+        }
 
     </main>
   )
