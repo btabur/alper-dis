@@ -1157,6 +1157,20 @@ footer {
                 }
               
             }
+            .icon-add-user {
+                font-size: 40px;
+               background-color: $color-secondary;
+               padding: 3px;
+               border-radius: 50%;
+               color: white;
+               box-shadow: 0 0 10px black;
+               transition: all 0.4s;
+               cursor: pointer;
+               &:hover {
+                   color: $color-primary;
+               }
+                
+            }
         }
     }
   
@@ -1286,6 +1300,9 @@ footer {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        .select-user {
+            color: black;
+        }
         div {
             display: flex;
             gap: 10px;

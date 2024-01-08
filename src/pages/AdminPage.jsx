@@ -7,6 +7,7 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import RandevuCard from "../componenets/RandevuCard";
+import { FaUserPlus } from "react-icons/fa6";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -79,9 +80,6 @@ const AdminPage = () => {
   }
 
 
-
-
-
   const handleSubmitPasswordModal = (e)=> {
     e.preventDefault()
     //girilen değerler ile sistemdeki bilgiler kontrol ediliyor
@@ -147,6 +145,7 @@ const AdminPage = () => {
                 <input ref={dateRef} onChange={filterNameAndDate}  type="date"/>
                 <button onClick={resetFilter} className="button">Sıfırla</button>
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />
+                <FaUserPlus className="icon-add-user" />
             </article>
           
         </section>

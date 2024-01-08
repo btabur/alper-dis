@@ -5,6 +5,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { toast } from 'react-toastify'
 import {db } from '../firebase/config'
 import { IoIosCloseCircle } from "react-icons/io";
+import Select from "react-select";
 
 
 
@@ -14,12 +15,20 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
   const [allTreat, setAllTreat] = useState([]);
   const [optionsFilteredHour, setoptionsFilteredHour] = useState([]);
   const [users,setUsers] = useState([])
+  const [userOptions,setUserOptions] = useState([])
+  const [selectedUser,setSelectedUser] =useState({
+    id:'',
+    name:''
+  })
  
 
   const handleChange = (e) => {
-    if (e.target.name == "date") {
-      checkHourOptions(e.target.value);
-    }
+      if(e.value) {
+        setSelectedUser({id:e.value, name:e.label})
+      }else {
+        checkHourOptions(e.target.value);
+      }
+   
   };
 
    //Verileri Getirme
@@ -29,6 +38,8 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
  const usersRef = collection(db,'Users');
 
   useEffect(() => {
+
+    
 
     onSnapshot(randevularRef, (snapShot) => {
 
@@ -54,10 +65,19 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
         //tüm kullanıcıları alıyoruz
         setUsers(allUser);
       });
+
+     
+      
   }, []);
+  useEffect(()=> {
+    getUserOptions()
+
+  },[users])
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
 
     //geçmiş bir tarihe randevu almayı engeller
     const isDayPassed = compareDates(
@@ -75,10 +95,11 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       date: e.target[3].value,
       phone: e.target[1].value,
       hour: e.target[4].value,
-      isChecked: false,
+      isChecked: true,
       user: {
-        name: e.target[2].value,
-        uid: localStorage.getItem('alperAdminId'),
+      //  name: e.target[2].options[e.target[2].selectedIndex].label, //seçilen kullanıcının kullanıcı adını alıyoruz
+        name:selectedUser.name,
+        uid: selectedUser.id,
       },
     }).then(() => {
       toast.success("Kaydınız Alınmıştır");
@@ -87,7 +108,10 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       e.target[2].value = "";
       e.target[3].value = "";
       e.target[4].value = "";
+      setIsShowAddTreatModal(false)
     });
+
+    getUserOptions()
   };
 
   const checkHourOptions = (date) => {
@@ -118,15 +142,21 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
    
     }
 
-    const getUsersOptions = ()=> {
+    const getUserOptions = ()=> {
+      const userOption = users.map((item)=> ({
+            value:item.id,
+            label:item.name
+      }))
+      setUserOptions(userOption)
 
-
+   
 
     }
 
+
   return (
     <section className="randevu-add">
-      <p>Randevu Formu</p>
+      <p> Yeni Randevu Ekle</p>
       <IoIosCloseCircle onClick={()=>setIsShowAddTreatModal(false)} className="icon-close" />
       <form onSubmit={handleSubmit}>
               <div>
@@ -140,12 +170,12 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
               <input  name='phone' className='input' type="text" placeholder='Telefon' required />
               </div>
               <div>
-              <select  className='input' name="users" required>
-                  <option value="" disabled>Tedavi Türü Seçin</option>
-                  {users.map((item)=> (
-                      <option value={item.id}>{item.name}</option>
-                  ))}
-                </select>
+
+                 <Select placeholder='Hasta Seçin' onChange={handleChange} className="select-user" options={userOptions}/>
+              
+              </div>
+              <div>
+            
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
                   
                   {/* saat */}
@@ -166,3 +196,12 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
 };
 
 export default RandevuCard;
+
+
+
+  {/* <select  className='input' name="users" required>
+                    <option value="" disabled>kullanıcı Seçin</option>
+                    {users.map((item)=> (
+                        <option value={item.id}>{item.name}</option>
+                    ))}
+                  </select> */}

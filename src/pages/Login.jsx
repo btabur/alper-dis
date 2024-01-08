@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { sendPasswordResetEmail } from "firebase/auth";
-import {addDoc, collection} from 'firebase/firestore'
+import {addDoc, collection, onSnapshot} from 'firebase/firestore'
 
 
 const Login = ({setStateUser}) => {
@@ -16,8 +16,10 @@ const Login = ({setStateUser}) => {
     const [authData,setAuthData] = useState({
         name:'',
         email:'',
+        phone:'',
         password:''
     })
+    const [users,setUsers] = useState([])
     const [isShowResetModal,setIsShowResetModal] = useState(false)
 
     const navigate = useNavigate()
@@ -29,23 +31,46 @@ const Login = ({setStateUser}) => {
         setAuthData({...authData, [e.target.name]:e.target.value})
     }
 
+    const handleSubmit =(e)=> {
+        e.preventDefault()
+        console.log(e.target[0].value)
+        setAuthData({...authData, [e.target.name]:e.target.value})
+
+        saveAuthWithEmail()
+
+
+    }
+
     //goole ile giriş için
-    const handleLogin = ()=> {
-        signInWithPopup(auth, provider).then((res)=>{
+    const handleLogin = async()=> {
+        await signInWithPopup(auth, provider).then((res)=>{
+            
             localStorage.setItem('UserAlper',res.user.refreshToken)
             setStateUser(res.user.refreshToken)
             toast.success('Giriş Yapıldı')
+
             navigate('/randevu')
         })
-            .catch(()=> toast.danger('Bir hata oluştu'))
+            .catch(()=> toast.info('Bir hata oluştu'))
+            console.log(auth.currentUser)
+            const found = users.find((user) => user.id == auth.currentUser.uid);
+            if(!found) {
+               addDoc(UsersRef, {
+                  name:auth.currentUser.displayName,
+                  email:auth.currentUser.email,
+                  id:auth.currentUser.uid,
+                  phone:auth.currentUser.phoneNumber
+
+               })
+            }
     }
    
     //email ile giriş için
-    const saveAuthWithEmail =async ()=> {
+    const saveAuthWithEmail = ()=> {
 
         if(isLogin) {   
 
-            LoginInWithEmail(authData.email, authData.password, authData.name);
+            LoginInWithEmail(authData.name);
             //kayıt işlemleri
         }else {
             //giriş işlemleri
@@ -71,18 +96,20 @@ const Login = ({setStateUser}) => {
         })
     }
 
-    const LoginInWithEmail = async (email, password, displayName) => {
+    const LoginInWithEmail = async (name) => {
         try {
           // E-posta ve şifre ile giriş yap
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const userCredential = await createUserWithEmailAndPassword(auth, authData.email, authData.password);
       
           // Kullanıcının displayName özelliğini güncelle sadece yeni kayıt olmuşsa
           
-            await updateProfile(userCredential.user, { displayName });
+            await updateProfile(userCredential.user, {name });
 
             //kullanıcıyı fireStore a kaydediyoruz
             await addDoc(UsersRef, {
-                name:displayName,
+                name:authData.name,
+                email:authData.email,
+                phone:authData.phone,
                 id:auth.currentUser.uid
              })
       
@@ -99,7 +126,24 @@ const Login = ({setStateUser}) => {
       };
     
 
+      useEffect(()=> {
+
+      
+        onSnapshot(UsersRef,(snapShot)=> {
+            const allUser = []
+      
+            snapShot.docs.forEach((doc)=>{
+            
     
+              allUser.push(doc.data())
+              
+            })
+            setUsers(allUser)
+           
+          })
+      },[])
+
+  
 
   return (
     <main className='login-page'>
@@ -108,21 +152,26 @@ const Login = ({setStateUser}) => {
                 <img src="/logo.png" alt="apler diş" />
             </div>
             <h4>{isLogin ? 'Kayıt Ol' : 'Giriş Yap'}</h4>
-            <form>
+            <form onSubmit={handleSubmit}>
                 { isLogin &&
                     <div>
                         <label htmlFor="name">Adınız Soyadınız</label>
-                        <input name='name' value={authData.name} onChange={handleInput} type="text" id='name' required/>
+                        <input name='name' onChange={handleInput} type="text" id='name' required/>
                      </div>}
+              {isLogin &&
+                <div>
+                    <label htmlFor="phone">Telefon</label>
+                    <input name='phone' onChange={handleInput}  type="phone" id='phone' required/>
+                </div>}
                 <div>
                     <label htmlFor="email">Email</label>
-                    <input name='email' value={authData.email} onChange={handleInput} type="email" id='email' required/>
+                    <input name='email' onChange={handleInput}  type="email" id='email' required/>
                 </div>
                 <div>
                     <label htmlFor="password">Şifre</label>
-                    <input name='password' value={authData.password} onChange={handleInput} type="password" id='password' required />
+                    <input name='password' onChange={handleInput}  type="password" id='password' required />
                 </div>
-                <button onClick={saveAuthWithEmail} type='button' className='button'> {isLogin ? 'Kayıt Ol' : 'Giriş Yap'}</button>
+                <button  type='submit' className='button'> {isLogin ? 'Kayıt Ol' : 'Giriş Yap'}</button>
                 {!isLogin && <span onClick={()=> setIsShowResetModal(true)} className='resetPassword'> Şifremi Unuttum</span>}
             </form>
             <div 
