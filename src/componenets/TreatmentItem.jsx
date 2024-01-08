@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { db } from '../firebase/config';
 import { doc, deleteDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
-import { formatDate } from '../constants';
+import { formatDate,compareDates, getCurentDay } from '../constants';
 
 const TreatmentItem = ({treat}) => {
 
@@ -31,7 +31,6 @@ const TreatmentItem = ({treat}) => {
 
 
 
-
   },[treat])
 
 
@@ -46,17 +45,17 @@ const TreatmentItem = ({treat}) => {
         
       </div>
       <div className='right'>
-        {!isPassed ?
+        {isPassed ==1 ||isPassed==0 ?
          <p className={treat.isChecked ? 'checked': 'unChecked'}>
-          {treat.isChecked ? 'Onaylandı' : 'Onaylanmadı'}</p>
+          {treat.isChecked ? 'Onaylandı' : 'Onay Bekliyor'}</p>
           
         : 
          <p>Geçmiş Randevu</p>
         }
-        {!isPassed &&
+        {isPassed ==1 || isPassed==0 ?
          <div className='background'>
          <MdDelete onClick={delDoc} className='icon-delete' />
-         </div>}
+         </div> : ''}
       </div>
        
       

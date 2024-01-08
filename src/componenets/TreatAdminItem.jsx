@@ -18,7 +18,7 @@ const TreatAdminItem = ({treat}) => {
     
     },[])
 
-    const handleChecked =async ()=> {
+    const handleChecked =async (e)=> {
       const docRef = doc(db, 'randevular', treat.id);
 
       await getDoc(docRef).then((res)=> setNewTreat(res.data()))

@@ -3,6 +3,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { db } from "../firebase/config";
 import TreatAdminItem from "../componenets/TreatAdminItem";
 import { getCurentDay } from "../constants";
+import { FaCirclePlus } from "react-icons/fa6";
+import { TbLogout } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -16,6 +19,7 @@ const AdminPage = () => {
   const [filteredTreats,setFilteredTreats] = useState([])
   const nameRef = useRef();
   const dateRef = useRef();
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -51,7 +55,7 @@ const AdminPage = () => {
   }, []);
   useEffect(()=> {
     getTodayTreatment();
-  },[treatmentList])
+  },[])
 
   //bu günün randevularını döndürür
   const getTodayTreatment = ()=> {
@@ -108,12 +112,21 @@ const AdminPage = () => {
 
   }
 
+  const handleLogOut = ()=> {
+      localStorage.removeItem('alperAdminRemember');
+      navigate('/')
+      
+  }
+
 
   return (
     <main className="adminPage">
       
 
         <h2>Admin Sayfası</h2>
+        <div onClick={handleLogOut} className='background'>
+           <TbLogout className="icon-logOut" />
+        </div>
 
         <section className="filter">
             <h4>Filitrele</h4>
@@ -121,6 +134,7 @@ const AdminPage = () => {
                 <input ref={nameRef} onChange={filterNameAndDate} type="text" placeholder="hasta ismi girin" />
                 <input ref={dateRef} onChange={filterNameAndDate}  type="date"/>
                 <button onClick={resetFilter} className="button">Sıfırla</button>
+                <FaCirclePlus className="icon-add" />
             </article>
           
         </section>

@@ -7,24 +7,17 @@ import { signOut } from '@firebase/auth'
 import {addDoc, collection} from 'firebase/firestore'
 import { doc, onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
-import { optionsHour, optionsTreatment } from '../constants'
+import { compareDates, formatDate, getCurentDay, optionsHour, optionsTreatment } from '../constants'
 
 const RandevuPage = ({setStateUser}) => {
  
-  const [formData, setFormData] = useState({
-    treatment:'',
-    phone:'',
-    name:'',
-    date:'',
-    hour:'',
-    isChecked:false
-  })
-
   const [treatmentList,setTreatmentList] = useState([])
   const [allTreat,setAllTreat] = useState([])
   const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
 
   const navigate = useNavigate()
+
+
   useEffect(()=> {
     // izinsiz girişleri engelliyoruz
     if(!localStorage.getItem('UserAlper')) {
@@ -41,39 +34,49 @@ const RandevuPage = ({setStateUser}) => {
         navigate('/')
       })
   }
+
   const handleChange = (e)=> {
-    setFormData({...formData, [e.target.name]:e.target.value})
     if(e.target.name == 'date'){
       checkHourOptions(e.target.value)
   }  }
+
+
   const handleSubmit = async (e)=> {
     e.preventDefault()
+
+   
   
     // yeni randevu almak için ileri bir tarihte randevusu olup olmadığı kontrol ediliyor
-    const currentTime = new Date().getTime();
-
-    if(currentTime<getLastAppointment()){
+    if(treatmentList.length>0) {
+      const isDayPass =compareDates(e.target[3].value,getLastAppointment()) 
+    if( isDayPass == 1){
       toast.info('İleri bir tarihe alınmış randevunuz zaten bulunmaktadır')
       return;
-    }
-    //geçmiş bir tarihe randevu almayı engeller
-    const appointmentDate= new Date(formData.date)
-    if(currentTime> appointmentDate) {
-      toast.info('Geçmiş tarihe randevu alamazsınız')
+    }else if (isDayPass ==0) {
+      toast.info('Bu güne alınmıs bir randevunuz bulunmaktadır')
       return;
+    }
+    }
+
+
+    //geçmiş bir tarihe randevu almayı engeller
+    const isDayPassed = compareDates(getCurentDay(),formatDate.date)
+    if(isDayPassed==-1) {
+      toast.info('Geçmiş güne randevu alamazsınız')
+        return;
     }
 
     
 
     //firebase e randevu ekleniyor
     await addDoc(randevularRef, {
-      treatment:formData.treatment,
-      date:formData.date,
-      phone:formData.phone,
-      hour:formData.hour,
-      isChecked:formData.isChecked,
+      treatment:e.target[0].value,
+      date:e.target[3].value,
+      phone:e.target[1].value,
+      hour:e.target[4].value,
+      isChecked:false,
       user:{
-        name:formData.name,
+        name:e.target[2].value,
         uid:auth.currentUser.uid
       }
   }).then(()=> {
@@ -89,11 +92,16 @@ const RandevuPage = ({setStateUser}) => {
 
   const getLastAppointment =( )=> {
 
-   const dateList = treatmentList.map((item)=> new Date(item.date).getTime())
+    if(treatmentList.length>0) {
+      const dateList = treatmentList.map((item)=> new Date(item.date).getTime())
       const orderedList = dateList.sort((a, b)=> b-a)
 
-   return orderedList[0]
+      const latestDate = new Date(orderedList[0]).toISOString().split('T')[0];
 
+   return latestDate;
+
+    }
+ 
   }
   
  //Verileri Getirme
@@ -119,22 +127,28 @@ const RandevuPage = ({setStateUser}) => {
      
     })
 
- },[formData])
+ },[])
 
 
  const checkHourOptions = (date) => {
 
       // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
 
-      const currentDay= new Date()
-      const treatDay= new Date(date)
+      // const currentDay= new Date()
+      // const treatDay= new Date(date)
 
 
-      if(currentDay>treatDay) {
+      // if(currentDay>treatDay) {
 
-        toast.info('Geçmiş güne randevu alamazsınız')
+      //   toast.info('Geçmiş güne randevu alamazsınız')
+      //   return;
+      // }
+
+    const isDayPassed = compareDates(getCurentDay(),date)
+    if(isDayPassed==-1) {
+      toast.info('Geçmiş güne randevu alamazsınız')
         return;
-      }
+    }
       //girilen günün randevularının alıyoruz
       const dayTreats = allTreat.filter((item)=> item.date == date && item )
       //options nesnesini çağırdık
@@ -170,23 +184,23 @@ const RandevuPage = ({setStateUser}) => {
             <form onSubmit={handleSubmit}>
               <div>
 
-                <select onChange={handleChange} className='input' name="treatment" required>
+                <select  className='input' name="treatment" required>
                   <option value="" disabled>Tedavi Türü Seçin</option>
                   {optionsTreatment.map((item)=> (
                       <option value={item.value}>{item.label}</option>
                   ))}
                 </select>
-              <input  name='phone' onChange={handleChange} className='input' type="text" placeholder='Telefon' required />
+              <input  name='phone' className='input' type="text" placeholder='Telefon' required />
               </div>
               <div>
-                <input  name='name' onChange={handleChange} className='input' type="text" placeholder='Ad soyad' required />
+                <input  name='name' className='input' type="text" placeholder='Ad soyad' required />
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
                   
                   {/* saat */}
-                <select onChange={handleChange} className='input' name="hour" required>
+                <select  className='input' name="hour" required>
                 <option value="" disabled>Saati Seçin</option>
-                  {optionsFilteredHour.map((item)=> (
-                      <option value={item.value}>{item.label}</option>
+                  {optionsFilteredHour.map((item,i)=> (
+                      <option key={i} value={item.value}>{item.label}</option>
                   ))}
                 </select>
               </div>
