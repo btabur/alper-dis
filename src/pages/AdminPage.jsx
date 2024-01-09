@@ -8,6 +8,7 @@ import { TbLogout } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import RandevuCard from "../componenets/RandevuCard";
 import { FaUserPlus } from "react-icons/fa6";
+import AddUser from "../componenets/AddUser";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -24,6 +25,10 @@ const AdminPage = () => {
   const nameRef = useRef();
   const dateRef = useRef();
   const navigate = useNavigate()
+  const [isShowAddUser,setIsShowAddUser]=useState(false);
+  const [users,setUsers] = useState([])
+ //Verileri Getirme
+ const UsersRef = collection(db,'Users')
 
 
   useEffect(() => {
@@ -57,6 +62,20 @@ const AdminPage = () => {
           
         })
         setTreatmentList(randevuList)
+       
+      })
+
+      // tüm kullanıcıları çekiyoruz
+      onSnapshot(UsersRef,(snapShot)=> {
+        const allUser = []
+  
+        snapShot.docs.forEach((doc)=>{
+        
+
+          allUser.push(doc.data())
+          
+        })
+        setUsers(allUser)
        
       })
 
@@ -145,7 +164,7 @@ const AdminPage = () => {
                 <input ref={dateRef} onChange={filterNameAndDate}  type="date"/>
                 <button onClick={resetFilter} className="button">Sıfırla</button>
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />
-                <FaUserPlus className="icon-add-user" />
+                <FaUserPlus onClick={()=> setIsShowAddUser(!isShowAddUser)}  className="icon-add-user" />
             </article>
           
         </section>
@@ -177,11 +196,15 @@ const AdminPage = () => {
             </div>   
         </div>}
 
-        {/*  randevu ekleme modal */}
+        {/*!//! randevu ekleme modal */}
         {isShowAddTreatModal &&
         
           <RandevuCard setIsShowAddTreatModal={setIsShowAddTreatModal} />
         
+        }
+          {/* //! yeni kullanıcı ekleme */}
+        {isShowAddUser &&
+          <AddUser users={users} setIsShowAddUser={setIsShowAddUser}/>
         }
 
     </main>

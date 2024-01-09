@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword,updateProfile, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword,updateProfile, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
 import { auth, db, provider } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { sendPasswordResetEmail } from "firebase/auth";
 import {addDoc, collection, onSnapshot} from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore';
 
 
 const Login = ({setStateUser}) => {
@@ -33,7 +34,6 @@ const Login = ({setStateUser}) => {
 
     const handleSubmit =(e)=> {
         e.preventDefault()
-        console.log(e.target[0].value)
         setAuthData({...authData, [e.target.name]:e.target.value})
 
         saveAuthWithEmail()
@@ -41,46 +41,43 @@ const Login = ({setStateUser}) => {
 
     }
 
-    //goole ile giriş için
-    const handleLogin = async()=> {
-        await signInWithPopup(auth, provider).then((res)=>{
-            
-            localStorage.setItem('UserAlper',res.user.refreshToken)
-            setStateUser(res.user.refreshToken)
-            toast.success('Giriş Yapıldı')
-
-            navigate('/randevu')
-        })
-            .catch(()=> toast.info('Bir hata oluştu'))
-            console.log(auth.currentUser)
-            const found = users.find((user) => user.id == auth.currentUser.uid);
-            if(!found) {
-               addDoc(UsersRef, {
-                  name:auth.currentUser.displayName,
-                  email:auth.currentUser.email,
-                  id:auth.currentUser.uid,
-                  phone:auth.currentUser.phoneNumber
-
-               })
-            }
-    }
+   
    
     //email ile giriş için
-    const saveAuthWithEmail = ()=> {
-
+    const saveAuthWithEmail =async ()=> {
+        const found = users.find((item)=> item.email == authData.email);
+        
+       console.log(found)
+        //kayıt işlemleri
         if(isLogin) {   
+            // aynı isimde bir kullanıcı var ise tekrar kayıt yapılmasını engeller
+            if(found) {
+                toast.info('Aynı isimde kullanıcı bulunmaktadır');
+                return;
+            }
 
+            //aynı isimde bir kullanıcı yoksa kayıt yapar
             LoginInWithEmail(authData.name);
-            //kayıt işlemleri
+        
         }else {
-            //giriş işlemleri
-            signInWithEmailAndPassword(auth, authData.email, authData.password)
-            .then((res)=> {
-                localStorage.setItem('UserAlper',res.user.refreshToken)
-                toast.success('Tekrar Hoş Geldiniz')
-                setStateUser(res.user.refreshToken)
-                navigate('/randevu')
-            }).catch(()=> toast.info('Mail veya şifre hatalı'))
+            //admin tarafından kaydedilen bir kullanıcı mı kontrol ediyoruz
+                
+            if (found.isAuth) {
+              //giriş işlemleri
+                    signInWithEmailAndPassword(auth, authData.email, authData.password)
+                    .then((res)=> {
+                        localStorage.setItem('UserAlper',res.user.refreshToken)
+                        toast.success('Tekrar Hoş Geldiniz')
+                        setStateUser(res.user.refreshToken)
+                        navigate('/randevu')
+                    }).catch(()=> toast.info('Mail veya şifre hatalı'))
+              } 
+              else if(!found.isAuth) { // bu email admin tarafından kayıt edilmiş
+                saveAndLoginWithEmail(authData.name);
+               
+              }
+            
+            
         }
 
     }
@@ -110,6 +107,7 @@ const Login = ({setStateUser}) => {
                 name:authData.name,
                 email:authData.email,
                 phone:authData.phone,
+                password:authData.password,
                 id:auth.currentUser.uid
              })
       
@@ -124,8 +122,45 @@ const Login = ({setStateUser}) => {
           toast.info('Bir hata oluştu', error);
         }
       };
+      
+      //admin tarafından kayıt edilen 
+      const saveAndLoginWithEmail = async (name) => {
+        const found = users.find((item)=> item.email == authData.email);
+        console.log(found)
+        //firestore daki bilgiler ile uyuşmuyorsa  geri döndür
+        if(found.password !== authData.password || found.email !== authData.email) {
+            toast.info('email veya şifre hatalı')
+            return;
+
+        }
+        try {
+          // E-posta ve şifre ile giriş yap
+          const userCredential = await createUserWithEmailAndPassword(auth, authData.email, authData.password);
+      
+          // Kullanıcının displayName özelliğini güncelle sadece yeni kayıt olmuşsa
+          
+            await updateProfile(userCredential.user, {name });
+           
+            const docRef = doc(db, 'Users',found.uid);
+        
+            await updateDoc(docRef,{
+                ...found, isAuth:true
+            })
+      
+          localStorage.setItem('UserAlper', userCredential.user.refreshToken);
+          navigate('/randevu');
+          setStateUser(userCredential.user.refreshToken);
+          toast.success('Giriş Yapıldı');
+      
+          console.log('Kullanıcı giriş yaptı ve displayName ayarlandı:', userCredential.user);
+        } catch (error) {
+          console.error('Giriş hatası:', error.message);
+          toast.info('Bir hata oluştu', error);
+        }
+      };
     
 
+      //tüm kullanıcıları çekiyoruz
       useEffect(()=> {
 
       
@@ -135,7 +170,7 @@ const Login = ({setStateUser}) => {
             snapShot.docs.forEach((doc)=>{
             
     
-              allUser.push(doc.data())
+              allUser.push({ ...doc.data(), uid: doc.id })
               
             })
             setUsers(allUser)
@@ -174,12 +209,6 @@ const Login = ({setStateUser}) => {
                 <button  type='submit' className='button'> {isLogin ? 'Kayıt Ol' : 'Giriş Yap'}</button>
                 {!isLogin && <span onClick={()=> setIsShowResetModal(true)} className='resetPassword'> Şifremi Unuttum</span>}
             </form>
-            <div 
-            onClick={handleLogin}
-             className='google'>
-
-                <img src="/icons/icon-google.png" alt="" />
-            </div>
 
             {isLogin ?
              <p>Hesabınız Var mı? <span onClick={()=> setIsLogin(false)}>Giriş Yap</span></p> :

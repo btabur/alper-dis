@@ -4,18 +4,22 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { signOut } from '@firebase/auth'
 import {addDoc, collection} from 'firebase/firestore'
-import { doc, onSnapshot } from "firebase/firestore";
+import {  onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
-import { compareDates, formatDate, getCurentDay, optionsHour, optionsTreatment } from '../constants'
+import { compareDates, getCurentDay, optionsHour, optionsTreatment } from '../constants'
 
 const RandevuPage = ({setStateUser}) => {
  
   const [treatmentList,setTreatmentList] = useState([])
   const [allTreat,setAllTreat] = useState([])
   const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
+  const [users,setUsers] = useState([])
 
   //Verileri Getirme
   const randevularRef = collection(db,'randevular')
+
+  //kullanıcıları Getirme
+  const usersRef = collection(db,'Users')
 
   const navigate = useNavigate()
 
@@ -110,26 +114,49 @@ const RandevuPage = ({setStateUser}) => {
  
  useEffect( ()=> {
      
-    onSnapshot(randevularRef,(snapShot)=> {
-      const randevuList = [];
-      const allrandevu = []
+    // tüm kullanıcıları çekiyoruz
+    onSnapshot(usersRef,(snapShot)=> {
+      const allUser = []
 
       snapShot.docs.forEach((doc)=>{
-        // sadece kullanıcının verilerini alıyoruz
-        if (doc.data().user && doc.data().user.uid && doc.data().user.uid == auth.currentUser.uid ) {
+      
 
-          randevuList.push({ ...doc.data(), id: doc.id });
-        }
-        allrandevu.push(doc.data())
+        allUser.push(doc.data())
         
       })
-      setTreatmentList(randevuList.reverse())
-      //tüm randevuları alıyoruz
-      setAllTreat(allrandevu)
+      setUsers(allUser)
      
     })
 
+
+
+ 
+
  },[])
+ useEffect(()=> {
+  onSnapshot(randevularRef,(snapShot)=> {
+    const randevuList = [];
+    const allrandevu = []
+
+    const found = users.find((item)=> item.email == auth.currentUser.email)
+
+
+    snapShot.docs.forEach((doc)=>{
+      // sadece kullanıcının verilerini alıyoruz
+      if (doc.data().user && doc.data().user.uid && doc.data().user.uid == found.id ) {
+
+        randevuList.push({ ...doc.data(), id: doc.id });
+      }
+      allrandevu.push(doc.data())
+      
+    })
+    setTreatmentList(randevuList.reverse())
+    //tüm randevuları alıyoruz
+    setAllTreat(allrandevu)
+   
+  })
+
+ },[users])
 
 
  const checkHourOptions = (date) => {
