@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import RandevuCard from "../componenets/RandevuCard";
 import { FaUserPlus } from "react-icons/fa6";
 import AddUser from "../componenets/AddUser";
+import ShowUsers from "../componenets/ShowUsers";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -17,7 +18,7 @@ const AdminPage = () => {
 
   const [admins, setAdmins] = useState([]);
   const [isShow,setIsShow] = useState(false);
-  const [adminId,setAdminId] =useState();
+
   const [isRemember,setIsRemember] = useState(false)
   const [treatmentList,setTreatmentList] = useState([])
   const [filteredTreats,setFilteredTreats] = useState([])
@@ -27,6 +28,7 @@ const AdminPage = () => {
   const navigate = useNavigate()
   const [isShowAddUser,setIsShowAddUser]=useState(false);
   const [users,setUsers] = useState([])
+  const [isShowUsers,setIsShowUsers] = useState(false)
  //Verileri Getirme
  const UsersRef = collection(db,'Users')
 
@@ -157,7 +159,18 @@ const AdminPage = () => {
            <TbLogout className="icon-logOut" />
         </div>
 
-        <section className="filter">
+
+        <div className="select">
+          <button className={isShowUsers ? 'btn active' : 'btn'}
+          onClick={()=> setIsShowUsers(true)}>Hastalar</button>
+          <button  className={!isShowUsers ? 'btn active' : 'btn'}
+          onClick={()=> setIsShowUsers(false)}>Randevular</button>
+        </div>
+
+        
+         {/* ---------  hastalar aktif ise gösterme */}
+       { !isShowUsers && 
+          <section className="filter">
             <h4>Filitrele</h4>
             <article className="filter-body">
                 <input ref={nameRef} onChange={filterNameAndDate} type="text" placeholder="hasta ismi girin" />
@@ -167,14 +180,22 @@ const AdminPage = () => {
                 <FaUserPlus onClick={()=> setIsShowAddUser(!isShowAddUser)}  className="icon-add-user" />
             </article>
           
-        </section>
-        <article className="admin-item-container" >
+        </section>}
+           {/* ---------  hastalar aktif ise gösterme */}
+       { !isShowUsers && 
+          <article className="admin-item-container" >
             {filteredTreats?.map((treat) => (
                   <TreatAdminItem key={treat.id}  treat={treat} /> 
             ))}
-        </article>
+        </article>}
 
-        {filteredTreats.length==0 && <p style={{textAlign:'center', margin:'100px'}}>Bu güne ait bir randevu bulunamadı</p> }
+        {filteredTreats.length==0 && !isShowUsers && <p style={{textAlign:'center', margin:'100px'}}>Bu güne ait bir randevu bulunamadı</p> }
+
+          {/* ------hastalar göster aktif ise */}
+          
+           {isShowUsers && <ShowUsers users = {users}/>}
+
+
 
 
 

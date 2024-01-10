@@ -3,7 +3,8 @@ import { compareDates, formatDate, getCurentDay } from '../constants'
 import { doc, updateDoc,getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { toast } from 'react-toastify';
-
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 const TreatAdminItem = ({treat}) => {
     const [isPassed,setIsPassed] = useState();
     const [newTreat,setNewTreat] = useState(treat);
@@ -42,18 +43,46 @@ const TreatAdminItem = ({treat}) => {
    
   return (
     <section className='treatAdminItem'>
-       <p> { treat.user.name}</p>
-       <p> {treat.phone}</p>
-       <p>{treat.treatment}</p>
-       <p>{formatDate(treat.date)} , {treat.hour} </p>
-
-      {isPassed== -1 ? 
-      <span>Geçmiş Randevu</span> : 
-      <div>
-          <button onClick={handleChecked} className={newTreat.isChecked ? ' btn checked' : ' btn unChecked'} >
-          {newTreat.isChecked ? 'Onaylandı': 'Onayla'}</button>
+      <div className="item-head">
+         <p> { treat.user.name}</p>
+         <p>{formatDate(treat.date)} , {treat.hour} </p>
+        
       </div>
-      }
+      <div className="item-body">
+           <p> Tel:  {treat.phone}</p> 
+          <p> Tedavi Türü:{treat.treatment}</p>
+          <p>Not:</p>
+      </div>
+      <div className="item-footer">
+        <div className="left">
+            {isPassed== -1 ? 
+          <span>Geçmiş Randevu</span> : 
+          <div>
+              <button onClick={handleChecked} className={newTreat.isChecked ? ' btn checked' : ' btn unChecked'} >
+              {newTreat.isChecked ? 'Onaylandı': 'Onayla'}</button>
+          </div>
+          }
+        </div>
+        <div className="right">
+        <div className="icon-background">
+             <MdEdit className='icon' />
+          </div>
+          <div className="icon-background">
+             <MdDelete className='icon' />
+          </div>
+        
+        </div>
+      
+      </div>
+
+     
+
+     
+     
+      
+      
+
+     
     
      
 
