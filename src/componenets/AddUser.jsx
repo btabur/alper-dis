@@ -32,11 +32,11 @@ const AddUser = ({users,setIsShowAddUser}) => {
 
       //email ile giriş için
       const saveAuthWithEmail =async ()=> {
-        const found = users.find((item)=> item.name == authData.name);
+        const found = users.find((item)=> item.email == authData.email);
        
-            // aynı isimde bir kullanıcı var ise tekrar kayıt yapılmasını engeller
+            // aynı mail de bir kullanıcı var ise tekrar kayıt yapılmasını engeller
             if(found) {
-                toast.info('Aynı isimde kullanıcı bulunmaktadır');
+                toast.info('Bu mail kullanılmaktadır');
                 return;
             }
 

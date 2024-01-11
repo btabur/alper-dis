@@ -29,6 +29,8 @@ const AdminPage = () => {
   const [isShowAddUser,setIsShowAddUser]=useState(false);
   const [users,setUsers] = useState([])
   const [isShowUsers,setIsShowUsers] = useState(false)
+  const [isShowToday,setIsShowToday] = useState(false)
+  const [filterInput,setFilterInput] = useState()
  //Verileri Getirme
  const UsersRef = collection(db,'Users')
 
@@ -83,10 +85,10 @@ const AdminPage = () => {
 
 
      
-
       
 
   }, []);
+  
 
   
 
@@ -122,18 +124,20 @@ const AdminPage = () => {
 
 
   const filterNameAndDate = ()=> {
-    console.log(nameRef.current.value);
-     console.log(dateRef.current.value);
+  
       const filteredList =  treatmentList.filter((treat)=> {
-          return (
-            //notun başlığı aratılan başlığı içeriyorsa 
-            (nameRef.current.value == '' || treat.user.name.toLocaleLowerCase().includes(nameRef.current.value.toLocaleLowerCase()))
-            &&
-            
-            (dateRef.current.value == '' || treat.date == dateRef.current.value)
-          )
-        })
-        setFilteredTreats(filteredList)
+        return (
+          //notun başlığı aratılan başlığı içeriyorsa 
+          (nameRef.current.value == '' || treat.user.name.toLocaleLowerCase().includes(nameRef.current.value.toLocaleLowerCase()))
+          &&
+          
+          (dateRef.current.value == '' || treat.date == dateRef.current.value)
+        )
+      })
+      setFilteredTreats(filteredList)
+    
+
+      
   }
 
   const resetFilter =()=> {
@@ -149,6 +153,11 @@ const AdminPage = () => {
       
   }
 
+  useEffect(()=> {
+    !isShowToday ?
+    filterNameAndDate() :
+    getTodayTreatment()
+  },[isShowToday])
 
   return (
     <main className="adminPage">
@@ -173,9 +182,13 @@ const AdminPage = () => {
           <section className="filter">
             <h4>Filitrele</h4>
             <article className="filter-body">
-                <input ref={nameRef} onChange={filterNameAndDate} type="text" placeholder="hasta ismi girin" />
-                <input ref={dateRef} onChange={filterNameAndDate}  type="date"/>
-                <button onClick={resetFilter} className="button">Sıfırla</button>
+                <input ref={nameRef} onChange={filterNameAndDate} disabled={isShowToday} type="text" placeholder="hasta ismi girin" />
+                <input ref={dateRef} onChange={filterNameAndDate} disabled={isShowToday}  type="date"/>
+               <div onClick={()=> setIsShowToday(!isShowToday)}
+                className="btn-today">
+                  <p onClick={resetFilter} >Bu Gün</p>
+                  <input type="checkbox" checked={isShowToday ? true: false } />
+               </div>
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />
                 <FaUserPlus onClick={()=> setIsShowAddUser(!isShowAddUser)}  className="icon-add-user" />
             </article>
@@ -220,7 +233,7 @@ const AdminPage = () => {
         {/*!//! randevu ekleme modal */}
         {isShowAddTreatModal &&
         
-          <RandevuCard setIsShowAddTreatModal={setIsShowAddTreatModal} />
+          <RandevuCard  setIsShowAddTreatModal={setIsShowAddTreatModal} />
         
         }
           {/* //! yeni kullanıcı ekleme */}

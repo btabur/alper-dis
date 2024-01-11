@@ -4,10 +4,18 @@
 - geçmiş bir tarihe randevu almayı engelle yapıldı
 - admin kısmı   yapıldı
 
-### Yapılacaklar
+
 - kullanıcı kaydını sadece firestore yap  yapıldı
 - google girişi kaldır. yapıldı
 - admin sayfasından yeni kullanıcı kaydı al yapıldı
 
-- admin sayfasında kullanıcılar ve randevular şeklinde iki sekme aç
-- randevu itemleri card şekline çevir grid yapısını kullan
+- admin sayfasında kullanıcılar ve randevular şeklinde iki sekme aç yapıldı
+- randevu itemleri card şekline çevir grid yapısını kullan yapıldı
+
+### Yapılacaklar
+- kullanıcılar bölüm de filtrelemyi  yap yapıldı
+- kullanıcı randevuları card a çevir  yapıldı
+        - kulanıcı tarafında yapılan kayıt gözükmemesi düzeltildi
+- admin tarafından randevuyu silme özelliğini aktif et  yapıldı
+- admin sayfası randevu eklendiğinde veya silindiğinde render et yapıldı
+- randevu ekle sayfasına tel ve isim i otamatik getir

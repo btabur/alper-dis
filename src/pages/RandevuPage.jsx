@@ -7,6 +7,7 @@ import {addDoc, collection} from 'firebase/firestore'
 import {  onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
 import { compareDates, getCurentDay, optionsHour, optionsTreatment } from '../constants'
+import TreatAdminItem from '../componenets/TreatAdminItem'
 
 const RandevuPage = ({setStateUser}) => {
  
@@ -14,6 +15,8 @@ const RandevuPage = ({setStateUser}) => {
   const [allTreat,setAllTreat] = useState([])
   const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
   const [users,setUsers] = useState([])
+  const [currentUser,setCurrentUser] = useState()
+
 
   //Verileri Getirme
   const randevularRef = collection(db,'randevular')
@@ -83,7 +86,7 @@ const RandevuPage = ({setStateUser}) => {
       isChecked:false,
       user:{
         name:e.target[2].value,
-        uid:auth.currentUser.uid
+        uid:currentUser.id
       }
   }).then(()=> {
     toast.success('Kaydınız Alınmıştır')
@@ -137,13 +140,16 @@ const RandevuPage = ({setStateUser}) => {
   onSnapshot(randevularRef,(snapShot)=> {
     const randevuList = [];
     const allrandevu = []
+ 
 
     const found = users.find((item)=> item.email == auth.currentUser.email)
+    setCurrentUser(found)
+    
 
 
     snapShot.docs.forEach((doc)=>{
       // sadece kullanıcının verilerini alıyoruz
-      if (doc.data().user && doc.data().user.uid && doc.data().user.uid == found.id ) {
+      if ( doc.data().user.uid == found?.id ) {
 
         randevuList.push({ ...doc.data(), id: doc.id });
       }
@@ -154,10 +160,12 @@ const RandevuPage = ({setStateUser}) => {
     //tüm randevuları alıyoruz
     setAllTreat(allrandevu)
    
+   
   })
 
  },[users])
 
+ 
 
  const checkHourOptions = (date) => {
 
@@ -186,6 +194,7 @@ const RandevuPage = ({setStateUser}) => {
       setoptionsFilteredHour(filteredOptions)
 
  }
+ 
   return (
     <main className='randevu'>
 
@@ -238,18 +247,17 @@ const RandevuPage = ({setStateUser}) => {
         </div>
 
         <h3>Randevularım</h3>
-        <div className='title'>
-          <p>İsim</p>
-          <p>Tedavi </p>
-          <p>Tarih</p>
-          <p></p>
-        </div>
+       
             {treatmentList.length == 0 && <p> Herhangi bir randevu kaydınız yoktur</p>}
-        {
-          treatmentList.map((item,index)=> (
-            <TreatmentItem key={index} treat = {item} />
-          ))
-        }
+       <div className='treat-item-container'>
+          {
+              treatmentList.map((item,index)=> (
+               <TreatmentItem key={index} treat = {item} />
+               // <TreatAdminItem key={index} treat = {item}/>
+              ))
+            }
+       </div>
+       
 
     </main>
   )

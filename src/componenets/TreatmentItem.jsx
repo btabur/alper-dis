@@ -16,8 +16,6 @@ const TreatmentItem = ({treat}) => {
      deleteDoc(doc(db,'randevular',treat.id))
      .then(()=> {
       toast.success('Randevunuz Silindi')
-       //yerel hafızadan siliyoruz
-      localStorage.removeItem('randevuAlper')
     })
 
   }
@@ -37,14 +35,18 @@ const TreatmentItem = ({treat}) => {
  
 
   return (
-    <main className='treatment-item'>
-      <div className='left'>
-        <p>{treat.user.name}</p>
-        <p>{treat.treatment}</p>
-        <p>{formatDate(treat.date)} , {treat.hour} </p>
-        
+    <main className='treat-item'>
+      <div className="treat-item-head">
+      <p>{treat.user.name}</p>
+      <p>{formatDate(treat.date)} , {treat.hour} </p>
+
       </div>
-      <div className='right'>
+      <div className="treat-item-body">
+        <div>Tedavi Türü:  <p>{treat.treatment}</p> </div>
+        <div>Not: <p></p></div>
+      </div>
+      <div className='treat-item-footer'>
+        <div className="left">
         {isPassed ==1 ||isPassed==0 ?
          <p className={treat.isChecked ? 'checked': 'unChecked'}>
           {treat.isChecked ? 'Onaylandı' : 'Onay Bekliyor'}</p>
@@ -52,10 +54,17 @@ const TreatmentItem = ({treat}) => {
         : 
          <p>Geçmiş Randevu</p>
         }
+       
+
+        </div>
+        <div className="right">
         {isPassed ==1 || isPassed==0 ?
          <div className='background'>
          <MdDelete onClick={delDoc} className='icon-delete' />
          </div> : ''}
+
+        </div>
+      
       </div>
        
       

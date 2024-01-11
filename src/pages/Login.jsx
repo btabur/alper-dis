@@ -107,6 +107,7 @@ const Login = ({setStateUser}) => {
                 name:authData.name,
                 email:authData.email,
                 phone:authData.phone,
+                isAuth:true,
                 password:authData.password,
                 id:auth.currentUser.uid
              })

@@ -1,19 +1,44 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ShowUserItem from './ShowUserItem'
 import { IoMdSearch } from "react-icons/io";
 
 
 const ShowUsers = ({users}) => {
-    console.log(users)
+  const [filteredList,setFilteredList] = useState([])
+  const [inputName,setInputName] = useState()
+  const inputRef =useRef()
+
+    const handleInput = (e)=> {
+      e.preventDefault()
+      console.log(e.target.value)
+      setInputName(e.target.value)
+     
+
+
+    }
+
+    const filterUsers = ()=> {
+      const filtered = users.filter((user) => {
+        return (
+          (inputRef.current.value == '' || user.name.toLocaleLowerCase().includes(inputRef.current.value.toLocaleLowerCase()))
+        )
+      })
+
+      setFilteredList(filtered)
+
+    }
+    useEffect(()=>{
+      filterUsers()
+    },[inputName])
   return (
     <section className='show-users'>
             <div className="show-users-filter">
-                <input type="text" placeholder='Hasta Ara' />
+                <input ref={inputRef} type="text" onChange={handleInput} placeholder='Hasta Ara' />
                 <IoMdSearch className='icon-search'/>
             </div>
 
             <div className='show-users-body'>
-                {users.map((user)=> (
+                {filteredList.map((user)=> (
                     <ShowUserItem key={user.id} user={user}/>
                 ))}
             </div>

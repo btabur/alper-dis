@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { compareDates, formatDate, getCurentDay } from '../constants'
-import { doc, updateDoc,getDoc } from 'firebase/firestore';
+import { doc, updateDoc,getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { toast } from 'react-toastify';
 import { MdDelete } from "react-icons/md";
@@ -37,6 +37,16 @@ const TreatAdminItem = ({treat}) => {
         
     }
 
+     //randevuyu silme işlemi
+  const delDoc = () => {
+    //fiebaseden siliyoruz
+     deleteDoc(doc(db,'randevular',treat.id))
+     .then(()=> {
+      toast.success('Randevunuz Silindi')
+    })
+
+  }
+
   
 
 
@@ -68,7 +78,7 @@ const TreatAdminItem = ({treat}) => {
              <MdEdit className='icon' />
           </div>
           <div className="icon-background">
-             <MdDelete className='icon' />
+             <MdDelete onClick={delDoc} className='icon' />
           </div>
         
         </div>
