@@ -18,12 +18,12 @@
         - kulanıcı tarafında yapılan kayıt gözükmemesi düzeltildi
 - admin tarafından randevuyu silme özelliğini aktif et  yapıldı
 
+- 12.01.24
 - admin sayfası randevu eklendiğinde veya silindiğinde render et yapıldı 
 - randevu ekle sayfasına tel ve isim i otamatik getir yapıldı
 - kullanıcı bilgilerini ekranda göster yapıldı
 - kullanıcı bilgilerini güncellemeyi aktif et yapıldı.
-
-- kullanıcı bilgilerini güncellediğinde tüm randevuları tara varsa oradaki bilgileri güncelle
+- kullanıcı bilgilerini güncellediğinde tüm randevuları tara varsa oradaki bilgileri güncelle yapıldı
 
 - not ekleme özelliği ekle
 - admin sayfasında sadece onay bekleyenleri göster;

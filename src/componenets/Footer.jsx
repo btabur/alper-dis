@@ -15,7 +15,7 @@ const Footer = () => {
     <div className="logo">
                 <h3>ALPER <span>KARABAĞ </span> </h3>
         </div>
-        <p>15 yılı aşkın tecrübeye sahip kalifiye personelimiz ile kaliteli hizmet sunuyoruz</p>
+        <p>15 yılı aşkın tecrübeye sahip kalifiye personelimiz ile kaliteli hizmet sunuyoruz...</p>
         <div className="socials">
             <div className="backround">
             <BsTwitterX style={{color:'#01CFC9'}} />
