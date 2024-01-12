@@ -2,7 +2,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { db } from "../firebase/config";
 import TreatAdminItem from "../componenets/TreatAdminItem";
-import { getCurentDay } from "../constants";
+import { compareDates, getCurentDay } from "../constants";
 import { FaCirclePlus } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
@@ -146,12 +146,18 @@ const AdminPage = () => {
 
   //randevu eklendiğinde veya silindiğinde otamatik render edilir
   useEffect(()=> {
-    !isShowToday ?
-    filterNameAndDate() :
-    getTodayTreatment()
-  },[treatmentList,isShowToday])
+    if(isShowToday){
+      getTodayTreatment()
+    }else if(isShowNotApproved) {
+      filterNotApporived()
+    }else {
+      filterNameAndDate() 
+    }
+  
+  },[treatmentList,isShowToday,isShowNotApproved])
 
 
+  //
   const handleSubmitPasswordModal = (e)=> {
     e.preventDefault()
     //girilen değerler ile sistemdeki bilgiler kontrol ediliyor
@@ -165,6 +171,16 @@ const AdminPage = () => {
            
         }
     })
+
+  }
+
+  //onaylanmayan ve tarihi geçmemiş randevuları getirir 
+  const filterNotApporived = ()=> {
+    
+    const filteredList=  treatmentList.filter((treat)=> !treat.isChecked && compareDates(treat.date,getCurentDay()) !== -1);
+    setIsShowToday(false)
+
+    setFilteredTreats(filteredList)
 
   }
   return (
@@ -190,15 +206,15 @@ const AdminPage = () => {
           <section className="filter">
             <h4>Filitrele</h4>
             <article className="filter-body">
-                <input ref={nameRef} onChange={filterNameAndDate} disabled={isShowToday} type="text" placeholder="hasta ismi girin" />
-                <input ref={dateRef} onChange={filterNameAndDate} disabled={isShowToday}  type="date"/>
-               <div onClick={()=> setIsShowToday(!isShowToday)}
+                <input ref={nameRef} onChange={filterNameAndDate} disabled={isShowToday || isShowNotApproved} type="text" placeholder="hasta ismi girin" />
+                <input ref={dateRef} onChange={filterNameAndDate} disabled={isShowToday || isShowNotApproved}  type="date"/>
+               <div onClick={()=> {setIsShowToday(!isShowToday); setIsShowNotApproved(false)}}
                 className="btn-today">
                   <p onClick={resetFilter} >Bu Gün</p>
                   <input type="checkbox" checked={isShowToday} />
                </div>
 
-               <div onClick={()=> setIsShowNotApproved(!isShowNotApproved)}
+               <div onClick={()=> {setIsShowNotApproved(!isShowNotApproved); setIsShowToday(false)}}
                 className="btn-today">
                   <p onClick={resetFilter} >Onay Bekleyenler</p>
                   <input type="checkbox" checked={isShowNotApproved} />
