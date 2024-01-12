@@ -42,7 +42,7 @@ const TreatAdminItem = ({treat}) => {
     //fiebaseden siliyoruz
      deleteDoc(doc(db,'randevular',treat.id))
      .then(()=> {
-      toast.success('Randevunuz Silindi')
+      toast.success('Randevuyu Silindiniz')
     })
 
   }
@@ -74,9 +74,6 @@ const TreatAdminItem = ({treat}) => {
           }
         </div>
         <div className="right">
-        <div className="icon-background">
-             <MdEdit className='icon' />
-          </div>
           <div className="icon-background">
              <MdDelete onClick={delDoc} className='icon' />
           </div>

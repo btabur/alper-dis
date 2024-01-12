@@ -7,7 +7,8 @@ import {addDoc, collection} from 'firebase/firestore'
 import {  onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
 import { compareDates, getCurentDay, optionsHour, optionsTreatment } from '../constants'
-import TreatAdminItem from '../componenets/TreatAdminItem'
+
+import Profil from '../componenets/Profil'
 
 const RandevuPage = ({setStateUser}) => {
  
@@ -26,9 +27,9 @@ const RandevuPage = ({setStateUser}) => {
 
   const navigate = useNavigate()
 
-
+// izinsiz girişleri engelliyoruz
   useEffect(()=> {
-    // izinsiz girişleri engelliyoruz
+    
     if(!localStorage.getItem('UserAlper')) {
        toast.info('Önce Oturum açamnız gerekli')
         navigate('/login')
@@ -115,6 +116,7 @@ const RandevuPage = ({setStateUser}) => {
   
 
  
+  //tüm kullanıcıları çekiyoruz
  useEffect( ()=> {
      
     // tüm kullanıcıları çekiyoruz
@@ -124,7 +126,7 @@ const RandevuPage = ({setStateUser}) => {
       snapShot.docs.forEach((doc)=>{
       
 
-        allUser.push(doc.data())
+        allUser.push({...doc.data(),uid:doc.id});
         
       })
       setUsers(allUser)
@@ -197,9 +199,10 @@ const RandevuPage = ({setStateUser}) => {
  
   return (
     <main className='randevu'>
-
-        <button onClick={handleLogOut} className='button btn-logout'>Çıkış Yap</button>
-
+      <button onClick={handleLogOut} className='button btn-logout'>Çıkış Yap</button>
+        
+        <Profil currentUser={currentUser}/>
+      
         <div className="card">
           <div className="head">
            <h2>Randevu Al</h2>
@@ -221,10 +224,10 @@ const RandevuPage = ({setStateUser}) => {
                       <option value={item.value}>{item.label}</option>
                   ))}
                 </select>
-              <input  name='phone' className='input' type="text" placeholder='Telefon' required />
+              <input  name='phone' value={currentUser?.phone} className='input' type="text" placeholder='Telefon' disabled  />
               </div>
               <div>
-                <input  name='name' className='input' type="text" placeholder='Ad soyad' required />
+                <input  name='name' value={currentUser?.name} className='input' type="text" placeholder='Ad soyad' disabled />
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
                   
                   {/* saat */}

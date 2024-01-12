@@ -17,5 +17,11 @@
 - kullanıcı randevuları card a çevir  yapıldı
         - kulanıcı tarafında yapılan kayıt gözükmemesi düzeltildi
 - admin tarafından randevuyu silme özelliğini aktif et  yapıldı
-- admin sayfası randevu eklendiğinde veya silindiğinde render et yapıldı
-- randevu ekle sayfasına tel ve isim i otamatik getir
+
+- admin sayfası randevu eklendiğinde veya silindiğinde render et yapıldı 
+- randevu ekle sayfasına tel ve isim i otamatik getir yapıldı
+- kullanıcı bilgilerini ekranda göster yapıldı
+- kullanıcı bilgilerini güncellemeyi aktif et yapıldı
+
+- not ekleme özelliği ekle
+- admin sayfasında sadece onay bekleyenleri göster;

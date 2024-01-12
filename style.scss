@@ -991,6 +991,44 @@ footer {
        
 
     }
+    .profil {
+        position: absolute;
+        top: 120px;
+        left: 20px;
+        padding: 20px 20px;
+        background-color: $color-third;
+        border-radius: 8px;
+        font-weight: bold;
+        input {
+            width: 120px;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+        }
+        .background {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            transition: all 0.4s;
+            box-shadow: 0 0 10px black;
+            &:hover {
+                background-color: $color-primary;
+                .icon {
+                    color: white;
+                }
+            }
+            .icon {
+                font-size: 20px;
+            }
+        }
+    }
  
 
     .card {
@@ -1000,6 +1038,7 @@ footer {
         color: white;
         border-radius: 10px;
         margin: 20px;
+        margin-top: 130px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -1493,34 +1532,6 @@ footer {
              box-shadow: 0 0 10px black;
              &:hover {
                 transform: translateY(-10px);
-             }
-             div {
-                display: flex;
-                justify-content: flex-end;
-                gap: 10px;
-                .icon-background {
-                    padding: 5px;
-                    background-color: white;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    transition: 0.4s;
-
-                    &:hover {
-                        background-color: $color-secondary;
-
-                        .icon {
-                            color: white;
-                        }
-                    }
-
-                    .icon {
-                        color: $color-primary;
-                    }
-
-                }
              }
         }
     }

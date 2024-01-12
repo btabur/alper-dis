@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword,updateProfile, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
+import { createUserWithEmailAndPassword,updateProfile, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
 import { auth, db, provider } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
@@ -135,12 +135,12 @@ const Login = ({setStateUser}) => {
 
         }
         try {
-          // E-posta ve şifre ile giriş yap
+          // E-posta ve şifre ile kayıt ol
           const userCredential = await createUserWithEmailAndPassword(auth, authData.email, authData.password);
       
           // Kullanıcının displayName özelliğini güncelle sadece yeni kayıt olmuşsa
-          
-            await updateProfile(userCredential.user, {name });
+
+            await updateProfile(userCredential.user, {name }).then(()=> console.log('kullanıcı adı eklendi'))
            
             const docRef = doc(db, 'Users',found.uid);
         

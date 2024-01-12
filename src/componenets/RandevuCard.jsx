@@ -11,7 +11,6 @@ import Select from "react-select";
 
 
 const RandevuCard = ({setIsShowAddTreatModal}) => {
-  const [treatmentList, setTreatmentList] = useState([]);
   const [allTreat, setAllTreat] = useState([]);
   const [optionsFilteredHour, setoptionsFilteredHour] = useState([]);
   const [users,setUsers] = useState([])
@@ -24,7 +23,8 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
 
   const handleChange = (e) => {
       if(e.value) {
-        setSelectedUser({id:e.value, name:e.label})
+        const found= users.find((item)=> item.id == e.value)
+        setSelectedUser(found)
       }else {
         checkHourOptions(e.target.value);
       }
@@ -37,9 +37,8 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
  //kullanıcı verilerini getirme
  const usersRef = collection(db,'Users');
 
+ //tüm randevuları ve kullanıcıları alıp state e aktarıyoruz
   useEffect(() => {
-
-    
 
     onSnapshot(randevularRef, (snapShot) => {
 
@@ -69,12 +68,17 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
      
       
   }, []);
+
+  //kullanıcılar state e aktarıldıktan  sonra kullanıcıların 
+  //selecte aktarılacağı fonksiyonu çalıştırıyrouz
   useEffect(()=> {
     getUserOptions()
 
   },[users])
 
 
+  //randevu formu gönderildiğinde
+  //kaydı gerçekleştirir
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -167,7 +171,7 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
                       <option value={item.value}>{item.label}</option>
                   ))}
                 </select>
-              <input  name='phone' className='input' type="text" placeholder='Telefon' required />
+              <input  name='phone' value={selectedUser?.phone} disabled className='input' type="text" placeholder='Telefon'  />
               </div>
               <div>
 

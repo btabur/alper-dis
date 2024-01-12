@@ -29,12 +29,17 @@ const AdminPage = () => {
   const [isShowAddUser,setIsShowAddUser]=useState(false);
   const [users,setUsers] = useState([])
   const [isShowUsers,setIsShowUsers] = useState(false)
-  const [isShowToday,setIsShowToday] = useState(false)
-  const [filterInput,setFilterInput] = useState()
+  const [isShowToday,setIsShowToday] = useState(true);
+  const [isShowNotApproved,setIsShowNotApproved] = useState(false)
+
  //Verileri Getirme
  const UsersRef = collection(db,'Users')
 
 
+ //admin verileri alınıyor
+ //beni hatırla aktif ise password modalı göstemiyor
+ //randevu verileri alınıyor ve state e aktarılıyor
+ //tüm kullanıcılar alınıp state aktarılıyor
   useEffect(() => {
 
    
@@ -102,22 +107,8 @@ const AdminPage = () => {
     setFilteredTreats(filteredList)
   }
 
-
-  const handleSubmitPasswordModal = (e)=> {
-    e.preventDefault()
-    //girilen değerler ile sistemdeki bilgiler kontrol ediliyor
-    admins.map((item)=> {
-        if(item.name == e.target[0].value && item.password== e.target[1].value ) {
-            setIsShow(true)
-           localStorage.setItem('alperAdminId',item.id)
-            if(isRemember) {
-                localStorage.setItem('alperAdminRemember',isRemember)
-            }
-           
-        }
-    })
-
-  }
+  
+ 
 
 
 
@@ -153,12 +144,29 @@ const AdminPage = () => {
       
   }
 
+  //randevu eklendiğinde veya silindiğinde otamatik render edilir
   useEffect(()=> {
     !isShowToday ?
     filterNameAndDate() :
     getTodayTreatment()
-  },[isShowToday])
+  },[treatmentList,isShowToday])
 
+
+  const handleSubmitPasswordModal = (e)=> {
+    e.preventDefault()
+    //girilen değerler ile sistemdeki bilgiler kontrol ediliyor
+    admins.map((item)=> {
+        if(item.name == e.target[0].value && item.password== e.target[1].value ) {
+            setIsShow(true)
+           localStorage.setItem('alperAdminId',item.id)
+            if(isRemember) {
+                localStorage.setItem('alperAdminRemember',isRemember)
+            }
+           
+        }
+    })
+
+  }
   return (
     <main className="adminPage">
       
@@ -189,6 +197,13 @@ const AdminPage = () => {
                   <p onClick={resetFilter} >Bu Gün</p>
                   <input type="checkbox" checked={isShowToday ? true: false } />
                </div>
+
+               <div onClick={()=> setIsShowToday(!isShowToday)}
+                className="btn-today">
+                  <p onClick={resetFilter} >Onay Bekleyenler</p>
+                  <input type="checkbox" checked={isShowToday ? true: false } />
+               </div>
+
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />
                 <FaUserPlus onClick={()=> setIsShowAddUser(!isShowAddUser)}  className="icon-add-user" />
             </article>
