@@ -61,7 +61,7 @@ const TreatAdminItem = ({treat}) => {
       <div className="item-body">
            <p> Tel:  {treat.phone}</p> 
           <p> Tedavi Türü:{treat.treatment}</p>
-          <p>Not:</p>
+          <p>Not: {treat.not}</p>
       </div>
       <div className="item-footer">
         <div className="left">

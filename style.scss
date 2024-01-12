@@ -1412,13 +1412,13 @@ footer {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        background-color: $color-primary;
-        color: white;
+        background-color: $color-secondary;
         margin: 10px;
         padding: 10px;
         border-radius: 10px;
         align-items: center;
-        min-width: 400px;
+        width: 400px;
+        height: 250px;
         position: relative;
         box-shadow: 0 0 10px black;
         transition: all 0.4s; 
@@ -1530,7 +1530,7 @@ footer {
     padding: 20px 50px;
     color: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px solid black;
+    box-shadow: 0 0 10px solid white;
     .icon-close {
         position: absolute;
         top: 5px;
@@ -1558,6 +1558,13 @@ footer {
             }
             span {
                 font-size: 12px;
+            }
+            textarea {
+                width: 300px;
+                height: 80px;
+                padding: 10px;
+                font-family: 'poppins',sans-serif;  
+
             }
         }
     }

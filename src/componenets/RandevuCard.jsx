@@ -99,6 +99,7 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       date: e.target[3].value,
       phone: e.target[1].value,
       hour: e.target[4].value,
+      not: e.target[5 ].value,
       isChecked: true,
       user: {
       //  name: e.target[2].options[e.target[2].selectedIndex].label, //seçilen kullanıcının kullanıcı adını alıyoruz
@@ -112,6 +113,7 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       e.target[2].value = "";
       e.target[3].value = "";
       e.target[4].value = "";
+      e.target[5].value=""
       setIsShowAddTreatModal(false)
     });
 
@@ -163,33 +165,36 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       <p> Yeni Randevu Ekle</p>
       <IoIosCloseCircle onClick={()=>setIsShowAddTreatModal(false)} className="icon-close" />
       <form onSubmit={handleSubmit}>
-              <div>
+                <div>
 
-                <select  className='input' name="treatment" required>
-                  <option value="" disabled>Tedavi Türü Seçin</option>
-                  {optionsTreatment.map((item)=> (
-                      <option value={item.value}>{item.label}</option>
-                  ))}
-                </select>
-              <input  name='phone' value={selectedUser?.phone} disabled className='input' type="text" placeholder='Telefon'  />
-              </div>
-              <div>
+                  <select  className='input' name="treatment" required>
+                    <option value="" disabled>Tedavi Türü Seçin</option>
+                    {optionsTreatment.map((item)=> (
+                        <option value={item.value}>{item.label}</option>
+                    ))}
+                  </select>
+                <input  name='phone' value={selectedUser?.phone} disabled className='input' type="text" placeholder='Telefon'  />
+                </div>
+                <div>
 
-                 <Select placeholder='Hasta Seçin' onChange={handleChange} className="select-user" options={userOptions}/>
+                  <Select placeholder='Hasta Seçin' onChange={handleChange} className="select-user" options={userOptions}/>
+                
+                </div>
+                <div>
               
-              </div>
-              <div>
-            
-                <input  name='date' onChange={handleChange} className='input' type="date" required/>
-                  
-                  {/* saat */}
-                <select  className='input' name="hour" required>
-                <option value="" disabled>Saati Seçin</option>
-                  {optionsFilteredHour.map((item,i)=> (
-                      <option key={i} value={item.value}>{item.label}</option>
-                  ))}
-                </select>
-              </div>
+                  <input  name='date' onChange={handleChange} className='input' type="date" required/>
+                    
+                    {/* saat */}
+                  <select  className='input' name="hour" required>
+                  <option value="" disabled>Saati Seçin</option>
+                    {optionsFilteredHour.map((item,i)=> (
+                        <option key={i} value={item.value}>{item.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <textarea name="not" id="not" placeholder="Not ekle"></textarea>
+                </div>
               <div>
               <button type='submit'  className='button'>Gönder</button>
               <span>Önce günü Seçin boş saatler otamatik yüklenecektir</span>
