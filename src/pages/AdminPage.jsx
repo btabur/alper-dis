@@ -195,13 +195,13 @@ const AdminPage = () => {
                <div onClick={()=> setIsShowToday(!isShowToday)}
                 className="btn-today">
                   <p onClick={resetFilter} >Bu Gün</p>
-                  <input type="checkbox" checked={isShowToday ? true: false } />
+                  <input type="checkbox" checked={isShowToday} />
                </div>
 
-               <div onClick={()=> setIsShowToday(!isShowToday)}
+               <div onClick={()=> setIsShowNotApproved(!isShowNotApproved)}
                 className="btn-today">
                   <p onClick={resetFilter} >Onay Bekleyenler</p>
-                  <input type="checkbox" checked={isShowToday ? true: false } />
+                  <input type="checkbox" checked={isShowNotApproved} />
                </div>
 
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />

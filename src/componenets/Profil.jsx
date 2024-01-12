@@ -4,10 +4,10 @@ import { IoSave } from "react-icons/io5";
 import { updateProfile } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { toast } from 'react-toastify';
-import { doc, updateDoc } from 'firebase/firestore';
+import { collection, doc, updateDoc } from 'firebase/firestore';
 
 
-const Profil = ({currentUser}) => {
+const Profil = ({treatmentList,currentUser}) => {
     const [isEdit,setIsEdit]=useState(false);
     const nameRef =useRef(null);
     const phoneRef=useRef(null);
@@ -53,9 +53,32 @@ const Profil = ({currentUser}) => {
         const docRef = doc(db, 'Users',currentUser.uid);
          updateDoc(docRef,{
             ...currentUser, name,phone
-        }).then (()=> toast.success('Bilgileriniz güncellendi'))
+        }).then (()=> {
+          //bilgiler güncellendi ise randevular listesindeki bilgileri de güncelle
+          updateFireStoreAppointments(name,phone)
+          toast.success('Bilgileriniz güncellendi')})
       }
       
+     const updateFireStoreAppointments =(name,phone)=> {
+        const foundList = treatmentList.filter((item)=> item.user.uid == currentUser.id);
+        console.log(foundList)
+
+        foundList?.forEach(item => {
+
+           const docRef = doc(db, 'randevular',item.id);
+         
+          updateDoc(docRef,{
+            ...item, 
+            user: {
+              ...item.user,
+              name,
+            },phone,
+
+        })
+        });
+
+
+     }
      
   return (
     <article className='profil'>

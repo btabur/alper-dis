@@ -7,6 +7,7 @@ import {addDoc, collection} from 'firebase/firestore'
 import {  onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
 import { compareDates, getCurentDay, optionsHour, optionsTreatment } from '../constants'
+import { IoSettings } from "react-icons/io5";
 
 import Profil from '../componenets/Profil'
 
@@ -16,7 +17,8 @@ const RandevuPage = ({setStateUser}) => {
   const [allTreat,setAllTreat] = useState([])
   const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
   const [users,setUsers] = useState([])
-  const [currentUser,setCurrentUser] = useState()
+  const [currentUser,setCurrentUser] = useState();
+  const [isShowUserInfo,setIsShowUserInfo] =useState(false)
 
 
   //Verileri Getirme
@@ -199,9 +201,16 @@ const RandevuPage = ({setStateUser}) => {
  
   return (
     <main className='randevu'>
-      <button onClick={handleLogOut} className='button btn-logout'>Çıkış Yap</button>
+      <div className='btn-logout'>
+      <button onClick={handleLogOut} className='button'>Çıkış Yap</button>
+        <div onClick={()=>setIsShowUserInfo(!isShowUserInfo)}
+         className="background">
+             <IoSettings className='icon' />
+        </div>
+      </div>
+    
         
-        <Profil currentUser={currentUser}/>
+       {isShowUserInfo && <Profil treatmentList={treatmentList} currentUser={currentUser}/>}
       
         <div className="card">
           <div className="head">

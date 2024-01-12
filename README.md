@@ -21,7 +21,10 @@
 - admin sayfası randevu eklendiğinde veya silindiğinde render et yapıldı 
 - randevu ekle sayfasına tel ve isim i otamatik getir yapıldı
 - kullanıcı bilgilerini ekranda göster yapıldı
-- kullanıcı bilgilerini güncellemeyi aktif et yapıldı
+- kullanıcı bilgilerini güncellemeyi aktif et yapıldı.
+
+- kullanıcı bilgilerini güncellediğinde tüm randevuları tara varsa oradaki bilgileri güncelle
 
 - not ekleme özelliği ekle
 - admin sayfasında sadece onay bekleyenleri göster;
+- randevuları tarihe ve ssate göre sırala

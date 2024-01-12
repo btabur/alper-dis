@@ -985,9 +985,36 @@ footer {
     margin-bottom: 150px;
     position: relative;
     .btn-logout {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
         position: absolute;
         top: 110px;
         right: 0;
+        gap: 10px;
+      
+
+
+        .background {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $color-secondary;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            transition: all 0.4s;
+            box-shadow: 0 0 10px black;
+            &:hover {
+                background-color: $color-primary;
+                
+            }
+            .icon {
+                font-size: 20px;
+                color: white;
+            }
+        }
        
 
     }
@@ -1196,7 +1223,6 @@ footer {
         background-color: $color-secondary;
        
         cursor: pointer;
-
         .icon-logOut {
             font-size: 30px;
             color: white;
