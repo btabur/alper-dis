@@ -34,10 +34,10 @@ const AddUserComment = ({setIsShowAddComment,currentUser}) => {
         <div className="head">
              <IoIosCloseCircleOutline onClick={()=>setIsShowAddComment(false) } className='icon-close' />
         
-        <p>{currentUser.name}</p>
+        <p>{currentUser?.name}</p>
         </div>
 
-        <textarea ref={commentRef} type="text" defaultValue={currentUser.comment} placeholder='Yorumunuz' />
+        <textarea ref={commentRef} type="text" defaultValue={currentUser?.comment} placeholder='Yorumunuz' />
         <div className="footer">
             <div className="left">
                 <div onClick={()=>setIsHappy(true)} className={`background ${isHappy ? 'active' : ''}`}>

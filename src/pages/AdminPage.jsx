@@ -10,6 +10,8 @@ import RandevuCard from "../componenets/RandevuCard";
 import { FaUserPlus } from "react-icons/fa6";
 import AddUser from "../componenets/AddUser";
 import ShowUsers from "../componenets/ShowUsers";
+import { PiEnvelopeLight } from "react-icons/pi";
+import AdminContactModal from "../componenets/AdminContactModal";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -30,10 +32,15 @@ const AdminPage = () => {
   const [users,setUsers] = useState([])
   const [isShowUsers,setIsShowUsers] = useState(false)
   const [isShowToday,setIsShowToday] = useState(true);
-  const [isShowNotApproved,setIsShowNotApproved] = useState(false)
+  const [isShowNotApproved,setIsShowNotApproved] = useState(false);
+  const [contacts,setContacts] = useState([])
+  const [isShowContacts,setIsShowContacts] = useState(false)
 
  //Verileri Getirme
  const UsersRef = collection(db,'Users')
+
+ //Verileri Getirme
+ const contactRef = collection(db,'contacts')
 
 
  //admin verileri alınıyor
@@ -85,6 +92,21 @@ const AdminPage = () => {
           
         })
         setUsers(allUser)
+       
+      })
+
+
+       // tiletişim formunu dolduranları çekiyoruz
+       onSnapshot(contactRef,(snapShot)=> {
+        const conts = []
+  
+        snapShot.docs.forEach((doc)=>{
+        
+
+          conts.push({...doc.data(),id:doc.id})
+          
+        })
+        setContacts(conts)
        
       })
 
@@ -198,9 +220,16 @@ const AdminPage = () => {
       
 
         <h2>Admin Sayfası</h2>
+        <div className="logout-and-message">
         <div onClick={handleLogOut} className='background'>
-           <TbLogout className="icon-logOut" />
+           <TbLogout className="icon" />
         </div>
+        <div onClick={()=>setIsShowContacts(!isShowContacts)} className="background message">
+            <PiEnvelopeLight className="icon"/>
+           {contacts.length>0 && <span>{contacts?.length}</span>}
+          </div>
+        </div>
+      
 
 
         <div className="select">
@@ -208,6 +237,7 @@ const AdminPage = () => {
           onClick={()=> setIsShowUsers(true)}>Hastalar</button>
           <button  className={!isShowUsers ? 'btn active' : 'btn'}
           onClick={()=> setIsShowUsers(false)}>Randevular</button>
+        
         </div>
 
         
@@ -250,9 +280,6 @@ const AdminPage = () => {
            {isShowUsers && <ShowUsers users = {users}/>}
 
 
-
-
-
             {/* //! giriş de admin sayfasını açmak için modal */}
         {!isShow && <div className="modal">
             <div className="modal-body">
@@ -280,6 +307,11 @@ const AdminPage = () => {
           {/* //! yeni kullanıcı ekleme */}
         {isShowAddUser &&
           <AddUser users={users} setIsShowAddUser={setIsShowAddUser}/>
+        }
+
+        {/* //! iletişim formunu dolduranları gösteren modal */}
+        {isShowContacts && contacts.length>0 &&
+            <AdminContactModal contacts={contacts} setIsShowContacts={setIsShowContacts}/>
         }
 
     </main>

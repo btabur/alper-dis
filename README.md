@@ -33,7 +33,11 @@
 - gerekli responsive ayarlamalı yap. yapıld
 - ana sayfadaki toplam online randevuyu dinamik yap yapıldı
 - user sayfasına bizi değerlendir şeklinde bir buton koy ve basılınca yorum yapıp değerlendirebileceği bir modal aç. yapıldı.
-- yapılan yorumları çek
+- yapılan yorumları çek yapıldı.
+- anasayfadaki iletişim formunu aktif et ve admin sayfasından bu verileri çek yapıldı
+
+- admin sayfasında randevu alırken saati seçme kısmını select yap ve bir kaç tane saat seçilebilsin
+- gün ve saat seçme kısmını google takvim veya git hub taki gibi yap
 
 - sorulacaklar 
  uzmanlarımız kısmında diğer çalışanlara yer vereyim mi
