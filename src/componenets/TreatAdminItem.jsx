@@ -4,7 +4,6 @@ import { doc, updateDoc,getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { toast } from 'react-toastify';
 import { MdDelete } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 const TreatAdminItem = ({treat}) => {
     const [isPassed,setIsPassed] = useState();
     const [newTreat,setNewTreat] = useState(treat);
@@ -14,6 +13,7 @@ const TreatAdminItem = ({treat}) => {
         const isPass = compareDates(getCurentDay(),treat.date)
 
         setIsPassed(isPass)
+     
 
        
     

@@ -52,7 +52,7 @@ const TreatmentItem = ({treat}) => {
           {treat.isChecked ? 'Onaylandı' : 'Onay Bekliyor'}</p>
           
         : 
-         <p>Geçmiş Randevu</p>
+         <span>Geçmiş Randevu</span>
         }
        
 

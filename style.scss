@@ -640,7 +640,7 @@ header {
             border: 1px solid $color-secondary;
             padding: 10px 20px;
             gap: 10px;
-            min-height: 200px;
+            min-height: 180px;
             border-radius: 20px;
             transition: all 0.5s;
             cursor: pointer;
@@ -1015,35 +1015,50 @@ footer {
     position: relative;
     .btn-logout {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        flex-direction: row-reverse;
         position: absolute;
         top: 110px;
-        right: 0;
+        right: 50px;
         gap: 10px;
+        span {
+            min-width: 200px;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+
+        }
+        div {
+            display: flex;
+            gap: 10px;
+            flex-direction: row-reverse;
+            .background {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: $color-secondary;
+                border-radius: 50%;
+                width: 35px;
+                height: 35px;
+                cursor: pointer;
+                transition: all 0.4s;
+                box-shadow: 0 0 10px black;
+                &:hover {
+                    background-color: $color-primary;
+                    
+                }
+                .icon {
+                    font-size: 20px;
+                    color: white;
+                }
+            }
+
+        }
       
 
 
-        .background {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: $color-secondary;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            transition: all 0.4s;
-            box-shadow: 0 0 10px black;
-            &:hover {
-                background-color: $color-primary;
-                
-            }
-            .icon {
-                font-size: 20px;
-                color: white;
-            }
-        }
+      
        
 
     }
@@ -1142,9 +1157,11 @@ footer {
     }
 }
 .treat-item-container {
-    margin: 50px 0px ;
+   width: 100%;
+   margin: 40px 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     .treat-item {
         min-width: 350px;
         min-height: 200px;
@@ -1188,6 +1205,14 @@ footer {
             position: absolute;
             bottom: 10px;
             left: 10px;
+        }
+        .left {
+            span {
+                background-color: orange;
+                padding: 5px 10px;
+                border-radius: 8px;
+                color: white;
+            }
         }
     
         .right {
@@ -1287,6 +1312,7 @@ footer {
             font-weight: bold;
             box-shadow: 0 0 10px black ;
             cursor: pointer;
+            width: 120px;
         }
         .active {
             background-color: $color-primary;
@@ -1302,6 +1328,7 @@ footer {
         .filter-body {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 20px;
             .btn-today {
                 display: flex;
@@ -1358,7 +1385,7 @@ footer {
   
     .modal {
         width: 100%;
-        height: 120vh;
+        height: 95%;
         background-color: #0f2650;
         position: absolute;
         top: 100px;
@@ -1448,6 +1475,15 @@ footer {
             position: relative;
             align-items: center;
            justify-content: space-between;
+           .left {
+            span {
+                background-color: orange;
+                padding: 5px 10px;
+                border-radius: 8px;
+                color: white;
+                font-weight: bold;
+            }
+           }
             .right {
                 display: flex;
                 justify-content: flex-end;
@@ -1605,6 +1641,73 @@ footer {
         }
     }
   
+}
+
+.add-user-comment {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 50px;
+    background-color: $color-primary;
+    z-index: 5;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .head {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+        .icon-close {
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+    }
+   
+     textarea {
+        padding: 10px;
+        border-radius: 4px;
+        width: 400px;
+        height: 140px;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size: 18px;
+
+     }
+     .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .background {
+            padding: 20px 10px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s;
+            &:hover {
+                background-color: white;
+                .icon {
+                    color: $color-primary;
+                }
+            }
+            .icon {
+                font-size: 24px;
+                
+            }
+        }
+        .active {
+            background-color: white;
+            color: $color-primary;
+        }
+        .left {
+            display: flex;
+            gap: 10px;
+        }
+     }
 }
 
 //tablet

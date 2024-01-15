@@ -24,7 +24,17 @@
 - kullanıcı bilgilerini ekranda göster yapıldı
 - kullanıcı bilgilerini güncellemeyi aktif et yapıldı.
 - kullanıcı bilgilerini güncellediğinde tüm randevuları tara varsa oradaki bilgileri güncelle yapıldı
+- not ekleme özelliği ekle eklendi
+- admin sayfasında sadece onay bekleyenleri göster yapıldı.
 
-- not ekleme özelliği ekle
-- admin sayfasında sadece onay bekleyenleri göster;
-- randevuları tarihe ve ssate göre sırala
+- 15.01.24
+- tarihi geçenleri turuncu göster. yapıldı
+- randevuları tarihe ve state e göre sırala yapıldı. 
+- gerekli responsive ayarlamalı yap. yapıld
+- ana sayfadaki toplam online randevuyu dinamik yap yapıldı
+- user sayfasına bizi değerlendir şeklinde bir buton koy ve basılınca yorum yapıp değerlendirebileceği bir modal aç. yapıldı.
+- yapılan yorumları çek
+
+- sorulacaklar 
+ uzmanlarımız kısmında diğer çalışanlara yer vereyim mi
+ hasta yorumlarını

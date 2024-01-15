@@ -93,6 +93,26 @@ export const optionsTreatment = [
   }
 
 
+
+
+export const SortDateAndHour = (myArray)=> {
+
+ const sortedList= myArray.sort((a, b) => {
+    // Tarihleri karşılaştır
+    const dateComparison = new Date(a.date) - new Date(b.date);
+    if (dateComparison !== 0) {
+      return dateComparison;
+    }
+  
+    // Tarihler eşitse saatleri karşılaştır
+    return a.hour.localeCompare(b.hour);
+  });
+
+  return sortedList;
+
+}
+
+
     // const filterName = (e)=> {
   //     const filteredList = treatmentList.filter((treat)=> treat.user.name.toLowerCase().includes(e.target.value.toLowerCase()))
   //     setFilteredTreats(filteredList)

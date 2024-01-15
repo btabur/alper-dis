@@ -1,12 +1,33 @@
-import React from 'react'
+import { collection, onSnapshot } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
+import { db } from '../firebase/config'
 
 const Info = () => {
+
+    const [allTreat,setAllTreat] = useState([])
+
+      //Verileri Getirme
+  const randevularRef = collection(db,'randevular')
+
+   //sadece şimdiki kullanıcının verilerini çekip state e aktarıyoruz
+ useEffect(()=> {
+    onSnapshot(randevularRef,(snapShot)=> {
+      const allrandevu = []
+      snapShot.docs.forEach((doc)=>{
+        allrandevu.push(doc.data())
+        
+      })
+      setAllTreat(allrandevu)
+     
+    })
+  
+   },[])
     const cardCustomer =[
         {number:'1287+',
          desc: 'Memnun Müşteri'
         },
         {
-            number:'734+',
+            number:allTreat?.length,
             desc: 'Online Randevu'
         },
         {

@@ -6,10 +6,11 @@ import { signOut } from '@firebase/auth'
 import {addDoc, collection} from 'firebase/firestore'
 import {  onSnapshot } from "firebase/firestore";
 import TreatmentItem from '../componenets/TreatmentItem'
-import { compareDates, getCurentDay, optionsHour, optionsTreatment } from '../constants'
+import { SortDateAndHour, compareDates, getCurentDay, optionsHour, optionsTreatment } from '../constants'
 import { IoSettings } from "react-icons/io5";
 
 import Profil from '../componenets/Profil'
+import AddUserComment from '../componenets/AddUserComment'
 
 const RandevuPage = ({setStateUser}) => {
  
@@ -18,7 +19,8 @@ const RandevuPage = ({setStateUser}) => {
   const [optionsFilteredHour,setoptionsFilteredHour] = useState([])
   const [users,setUsers] = useState([])
   const [currentUser,setCurrentUser] = useState();
-  const [isShowUserInfo,setIsShowUserInfo] =useState(false)
+  const [isShowUserInfo,setIsShowUserInfo] =useState(false);
+  const [isShowAddComment,setIsShowAddComment] = useState()
 
 
   //Verileri Getirme
@@ -140,6 +142,8 @@ const RandevuPage = ({setStateUser}) => {
  
 
  },[])
+
+ //sadece şimdiki kullanıcının verilerini çekip state e aktarıyoruz
  useEffect(()=> {
   onSnapshot(randevularRef,(snapShot)=> {
     const randevuList = [];
@@ -160,8 +164,8 @@ const RandevuPage = ({setStateUser}) => {
       allrandevu.push(doc.data())
       
     })
-    setTreatmentList(randevuList.reverse())
-    //tüm randevuları alıyoruz
+    setTreatmentList(SortDateAndHour(randevuList).reverse())
+    //tüm kullanıcıların randevuları alıyoruz hangi saatlerin boş olduğunu anlamak için
     setAllTreat(allrandevu)
    
    
@@ -202,11 +206,16 @@ const RandevuPage = ({setStateUser}) => {
   return (
     <main className='randevu'>
       <div className='btn-logout'>
-      <button onClick={handleLogOut} className='button'>Çıkış Yap</button>
-        <div onClick={()=>setIsShowUserInfo(!isShowUserInfo)}
-         className="background">
-             <IoSettings className='icon' />
+        <div>
+            <button onClick={handleLogOut} className='button'>Çıkış Yap</button>
+            <div onClick={()=>setIsShowUserInfo(!isShowUserInfo)}
+            className="background">
+                <IoSettings className='icon' />
+            </div>
+
         </div>
+    
+        <span onClick={()=> setIsShowAddComment(!isShowAddComment)}>Aldığınız Hizmetten memnun musuz?</span>
       </div>
     
         
@@ -269,6 +278,10 @@ const RandevuPage = ({setStateUser}) => {
               ))
             }
        </div>
+
+       {/* yorum ekleme modalını göster */}
+
+       {isShowAddComment && <AddUserComment setIsShowAddComment={setIsShowAddComment} currentUser={currentUser}/>}
        
 
     </main>

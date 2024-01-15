@@ -1,6 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+import { auth } from '../../firebase/config';
+
 
 const Slider_1 = () => {
+
+  const navigate = useNavigate()
+ 
+  const handleRandevu = ()=> {
+    if(auth.currentUser) {
+      navigate('/randevu')
+    }else {
+      navigate('/login')
+      toast.info('Randevu almak için Oturum açmanız gerekir')
+    }
+  }
+
   return (
     <article className=' slide slide-1'>
 
@@ -12,7 +29,7 @@ const Slider_1 = () => {
                 kavuşması için tercih edeceğiniz çene ve yüz estetiği tedavisi ile dişleriniz için 
                 hem işlevsel hem de mükemmel görünen çözümlere ulaşın 
             </p>
-            <button className='button'> Online Randevu</button>
+            <button onClick={handleRandevu} className='button'> Online Randevu</button>
             </div>
             
     

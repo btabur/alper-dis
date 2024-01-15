@@ -2,7 +2,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { db } from "../firebase/config";
 import TreatAdminItem from "../componenets/TreatAdminItem";
-import { compareDates, getCurentDay } from "../constants";
+import { SortDateAndHour, compareDates, getCurentDay } from "../constants";
 import { FaCirclePlus } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
@@ -104,7 +104,7 @@ const AdminPage = () => {
   
     const filteredList=  treatmentList.filter((treat)=> treat.date == today);
 
-    setFilteredTreats(filteredList)
+    setFilteredTreats(SortDateAndHour(filteredList))
   }
 
   
@@ -125,7 +125,7 @@ const AdminPage = () => {
           (dateRef.current.value == '' || treat.date == dateRef.current.value)
         )
       })
-      setFilteredTreats(filteredList)
+      setFilteredTreats(SortDateAndHour(filteredList).reverse())
     
 
       
@@ -157,7 +157,7 @@ const AdminPage = () => {
   },[treatmentList,isShowToday,isShowNotApproved])
 
 
-  //
+  // admin sayfasını izinsiz girilen girişleri kontrol eder
   const handleSubmitPasswordModal = (e)=> {
     e.preventDefault()
     //girilen değerler ile sistemdeki bilgiler kontrol ediliyor
@@ -180,9 +180,19 @@ const AdminPage = () => {
     const filteredList=  treatmentList.filter((treat)=> !treat.isChecked && compareDates(treat.date,getCurentDay()) !== -1);
     setIsShowToday(false)
 
-    setFilteredTreats(filteredList)
+    setFilteredTreats(SortDateAndHour(filteredList))
 
   }
+
+
+
+
+
+
+
+
+
+
   return (
     <main className="adminPage">
       

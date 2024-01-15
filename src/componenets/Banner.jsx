@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 const Banner = () => {
   const phoneNumber = "05054898518"; 
   const navigate = useNavigate()
-  //todo user var ise yönlendirme yapılacak yoksa login sayfasına yönlendirme yapılacak
+ 
   const handleRandevu = ()=> {
     if(auth.currentUser) {
       navigate('/randevu')
