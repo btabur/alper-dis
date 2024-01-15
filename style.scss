@@ -644,6 +644,7 @@ header {
             border-radius: 20px;
             transition: all 0.5s;
             cursor: pointer;
+            position: relative;
             p {
                 text-align: center;
                 font-size: 22px;
@@ -655,6 +656,18 @@ header {
                 font-weight: 15px;
 
             }
+            .background {
+                 position: absolute;
+                 bottom: 20px;
+                 right: 40px;
+                 background-color: $color-primary;
+                 padding: 10px;
+                    border-radius: 50%;
+                 .icon {
+                    font-size: 20px;
+                    color: white;
+                 }
+            }
 
             &:hover {
                 background-color: $color-primary;
@@ -664,6 +677,12 @@ header {
                 }
                 span {
                     color: white;
+                }
+                .background {
+                    background-color: white;
+                    .icon{
+                        color: $color-primary;
+                    }
                 }
 
 
