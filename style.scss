@@ -1499,6 +1499,11 @@ footer {
                 font-size: 17px;
                 font-weight: bold;
             }
+            span {
+                position: absolute;
+                right: 10px;
+                top: 50px;
+            }
         }
         .item-body {
             display: flex;
@@ -1613,6 +1618,12 @@ footer {
         font-size: 25px;
         cursor: pointer;
 
+    }
+    .hour {
+        color: black;
+        display: flex;
+        flex-direction: column;
+       
     }
     form {
         display: flex;

@@ -5,7 +5,9 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { toast } from 'react-toastify'
 import {db } from '../firebase/config'
 import { IoIosCloseCircle } from "react-icons/io";
-import Select from "react-select";
+import Select, { components } from "react-select";
+import ReactSelect from "react-select"
+
 
 
 
@@ -19,6 +21,7 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
     id:'',
     name:''
   })
+  const [selectedHours,setSelectedHours] = useState([])
  
 
   const handleChange = (e) => {
@@ -98,7 +101,7 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       treatment: e.target[0].value,
       date: e.target[3].value,
       phone: e.target[1].value,
-      hour: e.target[4].value,
+      hour:  getListHour(),
       not: e.target[5 ].value,
       isChecked: true,
       user: {
@@ -122,8 +125,6 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
 
   const checkHourOptions = (date) => {
 
-     
-
     // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
        const isDayPassed = compareDates(getCurentDay(),date)
        let filteredOptions = []
@@ -141,7 +142,7 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
           filteredOptions =optionsHour
          // girilen gündeki randevu saatlerini options dan çıkartıyoruz
          dayTreats.forEach((treat)=> {
-           filteredOptions = filteredOptions.filter((i)=> i.value !== treat.hour  &&  i)
+           filteredOptions = filteredOptions.filter((i)=>  !treat.hour.includes(i.value) &&  i)
          })
    
          setoptionsFilteredHour(filteredOptions)
@@ -159,6 +160,14 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
 
     }
 
+   
+
+    const getListHour = ()=> {
+      const list = selectedHours.map((item)=> item.value);
+      return list;
+
+    }
+   
 
   return (
     <section className="randevu-add">
@@ -185,12 +194,10 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
                   <input  name='date' onChange={handleChange} className='input' type="date" required/>
                     
                     {/* saat */}
-                  <select  className='input' name="hour" required>
-                  <option value="" disabled>Saati Seçin</option>
-                    {optionsFilteredHour.map((item,i)=> (
-                        <option key={i} value={item.value}>{item.label}</option>
-                    ))}
-                  </select>
+                    <ReactSelect className="hour"
+                   //@ts-ignore
+                   onChange={(allTags)=>{setSelectedHours(allTags)}}
+                   options={optionsFilteredHour} isMulti />
                 </div>
                 <div>
                   <textarea name="not" id="not" placeholder="Not ekle"></textarea>

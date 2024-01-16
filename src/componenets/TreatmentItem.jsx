@@ -38,12 +38,13 @@ const TreatmentItem = ({treat}) => {
     <main className='treat-item'>
       <div className="treat-item-head">
       <p>{treat.user.name}</p>
-      <p>{formatDate(treat.date)} , {treat.hour} </p>
+      <p>{formatDate(treat.date)}  </p>
 
       </div>
       <div className="treat-item-body">
-        <div>Tedavi Türü:  <p>{treat.treatment}</p> </div>
-        <div>Not: <p></p></div>
+        <p><b>Saat: </b>{treat.hour.join(',')}</p>
+         <p><b>Tedavi Türü:</b>{treat.treatment}</p> 
+        <p><b>Not:</b> {treat.not}</p>
       </div>
       <div className='treat-item-footer'>
         <div className="left">

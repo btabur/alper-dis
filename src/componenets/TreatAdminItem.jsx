@@ -13,10 +13,7 @@ const TreatAdminItem = ({treat}) => {
         const isPass = compareDates(getCurentDay(),treat.date)
 
         setIsPassed(isPass)
-     
 
-       
-    
     },[])
 
     const handleChecked =async (e)=> {
@@ -47,7 +44,7 @@ const TreatAdminItem = ({treat}) => {
 
   }
 
-  
+    console.log(treat.hour.join(','))
 
 
    
@@ -55,13 +52,15 @@ const TreatAdminItem = ({treat}) => {
     <section className='treatAdminItem'>
       <div className="item-head">
          <p> { treat.user.name}</p>
-         <p>{formatDate(treat.date)} , {treat.hour} </p>
+         <p>{formatDate(treat.date)} </p>
+        
         
       </div>
       <div className="item-body">
-           <p> Tel:  {treat.phone}</p> 
-          <p> Tedavi Türü:{treat.treatment}</p>
-          <p>Not: {treat.not}</p>
+          <p><b>Saat:</b>  <span>{treat.hour.join(',')}</span></p>
+           <p><b>Tel: </b>  {treat.phone}</p> 
+          <p> <b>Tedavi Türü:</b>{treat.treatment}</p>
+          <p><b>Not:</b> {treat.not}</p>
       </div>
       <div className="item-footer">
         <div className="left">

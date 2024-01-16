@@ -105,7 +105,7 @@ export const SortDateAndHour = (myArray)=> {
     }
   
     // Tarihler eşitse saatleri karşılaştır
-    return a.hour.localeCompare(b.hour);
+    return a.hour[0].localeCompare(b.hour[0]);
   });
 
   return sortedList;

@@ -36,7 +36,10 @@
 - yapılan yorumları çek yapıldı.
 - anasayfadaki iletişim formunu aktif et ve admin sayfasından bu verileri çek yapıldı
 
-- admin sayfasında randevu alırken saati seçme kısmını select yap ve bir kaç tane saat seçilebilsin
+- 16.01.24
+- admin sayfasında randevu alırken saati seçme kısmını select yap ve bir kaç tane saat seçilebilsin yapıldı
+- select itemlerinin alt alta gelmesi lazım
+
 - gün ve saat seçme kısmını google takvim veya git hub taki gibi yap
 
 - sorulacaklar 
