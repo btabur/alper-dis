@@ -40,7 +40,7 @@
 - admin sayfasında randevu alırken saati seçme kısmını select yap ve bir kaç tane saat seçilebilsin yapıldı
 - select itemlerinin alt alta gelmesi lazım
 
-- gün ve saat seçme kısmını google takvim veya git hub taki gibi yap
+- gün ve saat seçme kısmını google takvim veya github taki gibi yap
 
 - sorulacaklar 
  uzmanlarımız kısmında diğer çalışanlara yer vereyim mi

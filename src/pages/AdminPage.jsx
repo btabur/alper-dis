@@ -271,6 +271,8 @@ const AdminPage = () => {
             {filteredTreats?.map((treat) => (
                   <TreatAdminItem key={treat.id}  treat={treat} /> 
             ))}
+
+            
         </article>}
 
         {filteredTreats.length==0 && !isShowUsers && <p style={{textAlign:'center', margin:'100px'}}>Bu güne ait bir randevu bulunamadı</p> }
