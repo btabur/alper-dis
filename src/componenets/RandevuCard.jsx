@@ -5,8 +5,8 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { toast } from 'react-toastify'
 import {db } from '../firebase/config'
 import { IoIosCloseCircle } from "react-icons/io";
-import Select, { components } from "react-select";
-import ReactSelect from "react-select"
+import Select from "react-select";
+
 
 
 
@@ -174,7 +174,6 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
       <p> Yeni Randevu Ekle</p>
       <IoIosCloseCircle onClick={()=>setIsShowAddTreatModal(false)} className="icon-close" />
       <form onSubmit={handleSubmit}>
-                <div>
 
                   <select  className='input' name="treatment" required>
                     <option value="" disabled>Tedavi Türü Seçin</option>
@@ -183,28 +182,25 @@ const RandevuCard = ({setIsShowAddTreatModal}) => {
                     ))}
                   </select>
                 <input  name='phone' value={selectedUser?.phone} disabled className='input' type="text" placeholder='Telefon'  />
-                </div>
-                <div>
-
-                  <Select placeholder='Hasta Seçin' onChange={handleChange} className="select-user" options={userOptions}/>
+  
+                 <Select placeholder='Hasta Seçin' onChange={handleChange} className="hour" options={userOptions}/>
                 
-                </div>
-                <div>
+          
               
                   <input  name='date' onChange={handleChange} className='input' type="date" required/>
                     
                     {/* saat */}
-                    <ReactSelect className="hour"
+                    <Select className="hour" placeholder='Saat seçin'
                    //@ts-ignore
                    onChange={(allTags)=>{setSelectedHours(allTags)}}
                    options={optionsFilteredHour} isMulti />
-                </div>
-                <div>
+                
+              
                   <textarea name="not" id="not" placeholder="Not ekle"></textarea>
-                </div>
+            
               <div>
               <button type='submit'  className='button'>Gönder</button>
-              <span>Önce günü Seçin boş saatler otamatik yüklenecektir</span>
+              <span>   Önce günü Seçin boş saatler otamatik yüklenecektir</span>
               </div>
             </form>
     </section>

@@ -44,7 +44,6 @@ const TreatAdminItem = ({treat}) => {
 
   }
 
-    console.log(treat.hour.join(','))
 
 
    

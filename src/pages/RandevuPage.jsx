@@ -11,6 +11,7 @@ import { IoSettings } from "react-icons/io5";
 
 import Profil from '../componenets/Profil'
 import AddUserComment from '../componenets/AddUserComment'
+import Select from "react-select";
 
 const RandevuPage = ({setStateUser}) => {
  
@@ -20,7 +21,8 @@ const RandevuPage = ({setStateUser}) => {
   const [users,setUsers] = useState([])
   const [currentUser,setCurrentUser] = useState();
   const [isShowUserInfo,setIsShowUserInfo] =useState(false);
-  const [isShowAddComment,setIsShowAddComment] = useState()
+  const [isShowAddComment,setIsShowAddComment] = useState();
+  const [selectedHours,setSelectedHours] = useState([])
 
 
   //Verileri Getirme
@@ -87,7 +89,7 @@ const RandevuPage = ({setStateUser}) => {
       treatment:e.target[0].value,
       date:e.target[3].value,
       phone:e.target[1].value,
-      hour:e.target[4].value,
+      hour: selectedHours,
       isChecked:false,
       user:{
         name:e.target[2].value,
@@ -99,7 +101,7 @@ const RandevuPage = ({setStateUser}) => {
     e.target[1].value=''
     e.target[2].value=''
     e.target[3].value=''
-    e.target[4].value=''
+    setSelectedHours('Saat Seçini')
   })
 
   }
@@ -177,31 +179,32 @@ const RandevuPage = ({setStateUser}) => {
 
  const checkHourOptions = (date) => {
 
-     
+  // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
+     const isDayPassed = compareDates(getCurentDay(),date)
+     let filteredOptions = []
+ 
+     if(isDayPassed==-1) {
+       toast.info('Geçmiş güne randevu alamazsınız')
+       setoptionsFilteredHour(filteredOptions)
+         return;
+     }
+       //girilen günün randevularının alıyoruz
+       const dayTreats = allTreat.filter((item)=> item.date == date && item )
+       
+       
+       //options nesnesini çağırdık
+        filteredOptions =optionsHour
+       // girilen gündeki randevu saatlerini options dan çıkartıyoruz
+       dayTreats.forEach((treat)=> {
+         filteredOptions = filteredOptions.filter((i)=>  !treat.hour.includes(i.value) &&  i)
+       })
+ 
+       setoptionsFilteredHour(filteredOptions)
+ 
+  }
 
- // geçmiş bir günü seçerse saatleri düzenlemeden geri döndürecek
-    const isDayPassed = compareDates(getCurentDay(),date)
-    let filteredOptions = []
 
-    if(isDayPassed==-1) {
-      toast.info('Geçmiş güne randevu alamazsınız')
-      setoptionsFilteredHour(filteredOptions)
-        return;
-    }
-      //girilen günün randevularının alıyoruz
-      const dayTreats = allTreat.filter((item)=> item.date == date && item )
-      
-      
-      //options nesnesini çağırdık
-       filteredOptions =optionsHour
-      // girilen gündeki randevu saatlerini options dan çıkartıyoruz
-      dayTreats.forEach((treat)=> {
-        filteredOptions = filteredOptions.filter((i)=> i.value !== treat.hour  &&  i)
-      })
 
-      setoptionsFilteredHour(filteredOptions)
-
- }
  
   return (
     <main className='randevu'>
@@ -249,12 +252,11 @@ const RandevuPage = ({setStateUser}) => {
                 <input  name='date' onChange={handleChange} className='input' type="date" required/>
                   
                   {/* saat */}
-                <select  className='input' name="hour" required>
-                <option value="" disabled>Saati Seçin</option>
-                  {optionsFilteredHour.map((item,i)=> (
-                      <option key={i} value={item.value}>{item.label}</option>
-                  ))}
-                </select>
+
+                 <Select className="input" placeholder='Saat seçin'
+                   //@ts-ignore
+                   onChange={(selected)=>{setSelectedHours([selected.value])}}
+                   options={optionsFilteredHour}  />
               </div>
               <div>
               <button type='submit'  className='button'>Gönder</button>
