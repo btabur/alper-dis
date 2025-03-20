@@ -46,7 +46,7 @@ const Footer = () => {
         <IoLocation className='icon'  style={{color:'#0F2650', fontSize:'20px'}}   />
         <span>Bingöl/Merkez</span>
         </div>
-        <p className='info'>Tüm Hakları Saklıdır | <a href="https://www.instagram.com/btabur03/" target='_blank'>Web Tasarım Merkezi</a></p>
+        <p className='info'>Tüm Hakları Saklıdır | <a href="https://www.instagram.com/codevionn/" target='_blank'>Codevion</a></p>
     </article>
       
    </footer>

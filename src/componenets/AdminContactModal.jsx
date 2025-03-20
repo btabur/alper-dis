@@ -26,8 +26,8 @@ const delDoc = (id) => {
             </div>
         </div>
         <div className="body">
-            {contacts.map((item)=>(
-                <div className="card">
+            {contacts.map((item,i)=>(
+                <div key={i} className="card">
                     <h5>{item.name}</h5>
                     <p>{item.phone}</p>
                     <p>{item.message}</p>

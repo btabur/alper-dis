@@ -251,13 +251,17 @@ const AdminPage = () => {
                <div onClick={()=> {setIsShowToday(!isShowToday); setIsShowNotApproved(false)}}
                 className="btn-today">
                   <p onClick={resetFilter} >Bu Gün</p>
-                  <input type="checkbox" checked={isShowToday} />
+                  <input
+                      type="checkbox"
+                      checked={isShowToday}
+                      onChange={(e) => setIsShowToday(e.target.checked)}
+                    />
                </div>
 
                <div onClick={()=> {setIsShowNotApproved(!isShowNotApproved); setIsShowToday(false)}}
                 className="btn-today">
                   <p onClick={resetFilter} >Onay Bekleyenler</p>
-                  <input type="checkbox" checked={isShowNotApproved} />
+                  <input type="checkbox" checked={isShowNotApproved} onChange={(e)=> setIsShowNotApproved(e.target.checked)} />
                </div>
 
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />

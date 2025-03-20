@@ -9,12 +9,9 @@ const TreatAdminItem = ({treat}) => {
     const [newTreat,setNewTreat] = useState(treat);
 
     useEffect(()=> {
-       
-        const isPass = compareDates(getCurentDay(),treat.date)
-
-        setIsPassed(isPass)
-
-    },[])
+      const isPass = compareDates(getCurentDay(),treat.date)
+          setIsPassed(isPass)
+      },[treat])
 
     const handleChecked =async (e)=> {
       const docRef = doc(db, 'randevular', treat.id);
@@ -56,7 +53,10 @@ const TreatAdminItem = ({treat}) => {
         
       </div>
       <div className="item-body">
-          <p><b>Saat:</b>  <span>{treat.hour.join(',')}</span></p>
+      <p>
+        <b>Saat:</b>{' '}
+        <span>{Array.isArray(treat.hour) ? treat.hour.join(', ') : treat.hour}</span>
+      </p>
            <p><b>Tel: </b>  {treat.phone}</p> 
           <p> <b>Tedavi Türü:</b>{treat.treatment}</p>
           <p><b>Not:</b> {treat.not}</p>
