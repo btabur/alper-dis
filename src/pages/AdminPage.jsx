@@ -12,6 +12,7 @@ import AddUser from "../componenets/AddUser";
 import ShowUsers from "../componenets/ShowUsers";
 import { PiEnvelopeLight } from "react-icons/pi";
 import AdminContactModal from "../componenets/AdminContactModal";
+import AppointmentCalendar from "../componenets/admin/AppointmentCalendar";
 
 const AdminPage = () => {
   //Verileri Getirme
@@ -153,12 +154,6 @@ const AdminPage = () => {
       
   }
 
-  const resetFilter =()=> {
-    nameRef.current.value=''
-    dateRef.current.value=''
-    getTodayTreatment()
-
-  }
 
   const handleLogOut = ()=> {
       localStorage.removeItem('alperAdminRemember');
@@ -206,15 +201,6 @@ const AdminPage = () => {
 
   }
 
-
-
-
-
-
-
-
-
-
   return (
     <main className="adminPage">
       
@@ -244,9 +230,9 @@ const AdminPage = () => {
          {/* ---------  hastalar aktif ise gösterme */}
        { !isShowUsers && 
           <section className="filter">
-            <h4>Filitrele</h4>
+            {/* <h4>Filitrele</h4> */}
             <article className="filter-body">
-                <input ref={nameRef} onChange={filterNameAndDate} disabled={isShowToday || isShowNotApproved} type="text" placeholder="hasta ismi girin" />
+                {/* <input ref={nameRef} onChange={filterNameAndDate} disabled={isShowToday || isShowNotApproved} type="text" placeholder="hasta ismi girin" />
                 <input ref={dateRef} onChange={filterNameAndDate} disabled={isShowToday || isShowNotApproved}  type="date"/>
                <div onClick={()=> {setIsShowToday(!isShowToday); setIsShowNotApproved(false)}}
                 className="btn-today">
@@ -262,7 +248,7 @@ const AdminPage = () => {
                 className="btn-today">
                   <p onClick={resetFilter} >Onay Bekleyenler</p>
                   <input type="checkbox" checked={isShowNotApproved} onChange={(e)=> setIsShowNotApproved(e.target.checked)} />
-               </div>
+               </div> */}
 
                 <FaCirclePlus onClick={()=>setIsShowAddTreatModal(!isShowAddTreatModal)} className="icon-add" />
                 <FaUserPlus onClick={()=> setIsShowAddUser(!isShowAddUser)}  className="icon-add-user" />
@@ -271,10 +257,10 @@ const AdminPage = () => {
         </section>}
            {/* ---------  hastalar aktif ise gösterme */}
        { !isShowUsers && 
-          <article className="admin-item-container" >
-            {filteredTreats?.map((treat) => (
-                  <TreatAdminItem key={treat.id}  treat={treat} /> 
-            ))}
+          <article className="admin-item-container 2" >
+              <AppointmentCalendar appointments={treatmentList}/>
+
+            
 
             
         </article>}
